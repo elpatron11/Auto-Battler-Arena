@@ -1,0 +1,37 @@
+/* Desktop-adaptive menu + class select. Load LAST in game.html. Phones are untouched:
+   every rule is gated by min-width and a fine pointer / large viewport. */
+.heroPortrait img[alt="Druid"]{object-fit:contain!important;object-position:center!important;transform:none!important;background:radial-gradient(circle at 50% 40%,#22301f,#0b1020 75%)}
+img[src*="class-portraits/druid-full"]{object-fit:contain!important;object-position:center!important;background:#152317}
+
+/* Details stay reachable when a card is opened, even under phone rules that hid the list. */
+#classGrid .card.infoOpen>ul{display:block!important;font-size:12.5px!important;line-height:1.5!important;margin:6px 14px 8px!important;padding-left:18px!important}
+#classGrid .card.infoOpen>ul .descFull{display:inline!important}
+#classGrid .card.infoOpen>ul .descShort{display:none!important}
+#classGrid .card.infoOpen .abilityToggle{display:flex!important}
+@media (max-height:520px) and (orientation:landscape){#classGrid .card.infoOpen{grid-column:1/-1}}
+
+@media (min-width:1024px){
+  #app{max-width:min(1480px,96vw)!important}
+  body:not(.battleMode) #app{width:min(1480px,96vw)!important}
+  body:not(.battleMode) #mainHub{max-width:min(1080px,92vw)!important}
+  #mainHub .hubTitle{font-size:clamp(40px,3.6vw,56px)!important}
+  #mainHub .hubSub{font-size:15px}
+  #mainHub .hubHero{padding:30px 28px 0!important}
+  #mainHub .hubBody{padding:0 28px 22px!important}
+  #mainHub .hubParty{height:clamp(220px,24vw,320px)!important}
+  #mainHub .hubPartyFace{max-width:300px!important}
+  #mainHub #hubJoinBtn{min-height:78px!important}
+  #mainHub .ar-quick-nav>.hubCard,#mainHub .ar-quick-nav>#hubArenaRankingsBtn{min-height:84px!important}
+  #mainHub .ar-quick-nav>.hubCard b{font-size:12px!important}
+  #mainHub .ar-quick-nav>.hubCard .hi{font-size:22px!important}
+  #mainHub .ar-menu-more .hubGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  body.teamBuilderMode #app{max-width:min(1360px,96vw)!important}
+  #classGrid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))!important;gap:16px!important}
+  #classGrid .card .heroPortrait{width:110px;height:110px;flex-basis:110px}
+  #classGrid .card .head{grid-template-columns:110px minmax(0,1fr) 32px 32px!important}
+  /* closed cards: HP, passive(s) and the first basic ability */
+  #classGrid .card:not(.infoOpen)>ul{display:block!important;margin:0 14px 12px!important;padding-left:18px!important;font-size:12px!important;line-height:1.45!important}
+  #classGrid .card:not(.infoOpen)>ul>li:not(:first-child):not(.passive):not(.firstAbility){display:none}
+  #classGrid .card.infoOpen{grid-column:span 2}
+}
+@media (min-width:1700px){ #app{max-width:1680px!important} #classGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important} }

@@ -1,0 +1,360 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&display=swap');
+
+/* Arena lobby: dark cinematic fantasy. Navy panels, thin blue rules, gold accents. */
+body.alLobby #mainHub{--al-navy:#070d1d;--al-navy2:#0c1a36;--al-line:rgba(70,130,225,.5);--al-gold:#f6c453;--al-gold2:#b9791c;--al-ink:#e9efff;--al-mut:#8fa3c9;
+  background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;overflow:visible!important}
+body.alLobby #mainHub>.hubHero,body.alLobby #mainHub>.hubBody{display:none!important}
+body:has(#mainHub:not([style*="display: none"])):not(.battleMode):not(.teamBuilderMode) #accountBar{display:none!important}
+
+#alRoot{position:relative;isolation:isolate;max-width:560px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 10px 28px;color:var(--al-ink);
+  font-family:'Segoe UI',system-ui,sans-serif;overflow-x:clip}
+#alRoot *{box-sizing:border-box}
+#alRoot button{font-family:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+ #alRoot button:disabled{cursor:not-allowed}
+ #alRoot .alTab:disabled,#alRoot .alCard:disabled{opacity:.45}
+#alRoot button:focus-visible,#alRoot summary:focus-visible{outline:2px solid var(--al-gold);outline-offset:2px}
+
+/* Lightweight cinematic backdrop: cropped upper architecture of existing key art */
+.alBg{position:absolute;z-index:-1;left:50%;top:0;width:100vw;transform:translateX(-50%);height:560px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,9,22,.35) 0,rgba(5,9,22,.1) 35%,#050a17 98%),
+  radial-gradient(ellipse at 50% 30%,rgba(255,170,70,.12),transparent 60%),
+   url('arena-lobby-background.webp') 50% 0/auto 100% no-repeat;opacity:.95}
+@media(min-width:700px){.alBg{background-size:cover,cover,cover;background-position:center,center,50% 12%;height:620px}}
+
+/* Top account row */
+.alTop{display:flex;align-items:center;gap:9px;min-height:54px}
+.alAvatar{width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;font:800 20px 'Cinzel',serif;color:var(--al-gold);
+  background:radial-gradient(circle at 35% 30%,#2b4f93,#0a1330 72%);border:2px solid var(--al-gold);box-shadow:0 0 0 2px #060b19,0 4px 12px #000a}
+ .alAvatar .acctAvatar{width:40px;height:40px;border:0;background:none}
+.alWho{min-width:0;flex:1}
+.alName{font:700 17px/1.1 'Cinzel',serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 6px #000}
+.alMeta{font-size:12px;color:#7fb4ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.alGold{display:flex;align-items:center;gap:7px;height:40px;padding:0 4px 0 10px;border-radius:12px;background:rgba(6,12,28,.82);border:1px solid var(--al-line);flex:none}
+.alGold b{font:800 16px 'Cinzel',serif;color:var(--al-gold);min-width:2ch;text-align:right}
+.alCoin{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a0,#e0a21f 60%,#8a5410);box-shadow:inset 0 0 0 2px #fff3 ,0 0 8px #f6c45355}
+.alPlus,.alIconBtn{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:11px;border:1px solid var(--al-line);background:rgba(10,24,52,.9);color:#cfe0ff;cursor:pointer;padding:0}
+.alPlus{width:32px;height:32px;border-radius:9px;margin:0}
+.alPlus svg{width:16px;height:16px}.alIconBtn svg{width:22px;height:22px}
+#alRoot #mgNotifyBtn{position:relative;display:grid!important;place-items:center;width:44px!important;height:44px!important;min-height:44px!important;margin:0!important;padding:0!important;border-radius:11px!important;
+  background:rgba(10,24,52,.9)!important;border:1px solid var(--al-line)!important;color:var(--al-gold)!important}
+#alRoot #mgNotifyBtn svg{width:24px;height:24px}
+#alRoot #mgNotifyBtn .mgNotifyLabel{display:none}
+#alRoot #mgNotifyBadge{position:absolute;right:-5px;top:-6px;min-width:20px;height:20px;line-height:20px;padding:0 5px;font-size:11px;border-radius:10px;background:#e0382f;color:#fff;border:2px solid #060b19}
+#alBellSlot,#alGearSlot{display:contents}
+ @media(max-width:459px){
+   .alTop{display:grid;grid-template-columns:46px minmax(0,1fr) 44px 44px;gap:5px 8px}
+   .alAvatar{grid-column:1;grid-row:1/3}
+   .alWho{grid-column:2;grid-row:1}
+   .alGold{grid-column:2/5;grid-row:2;justify-self:end}
+   #alRoot #mgNotifyBtn{grid-column:3;grid-row:1}
+   #alGearSlot>.alIconBtn{grid-column:4;grid-row:1}
+ }
+
+/* Tabs */
+.alTabs{display:grid;grid-template-columns:repeat(5,1fr);margin:8px 0 0;border-radius:16px;background:linear-gradient(180deg,rgba(14,28,60,.94),rgba(6,11,26,.94));
+  border:1px solid var(--al-line);box-shadow:0 8px 24px #0009,inset 0 0 0 1px #ffffff0a;position:relative;z-index:3}
+.alTab{min-height:54px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:0;color:#b7c7e8;cursor:pointer;padding:5px 0;position:relative;
+  font:700 10.5px/1 'Cinzel',serif;letter-spacing:.04em}
+.alTab+.alTab::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:1px;background:var(--al-line);opacity:.5}
+.alTab svg{width:24px;height:24px}
+.alTab.on{color:var(--al-gold)}
+.alTab.on::after{content:'';position:absolute;left:14%;right:14%;bottom:3px;height:2px;border-radius:2px;background:var(--al-gold);box-shadow:0 0 8px var(--al-gold)}
+.alTab:active{transform:scale(.96)}
+
+/* Hero scene */
+.alScene{position:relative;margin:0 -10px;min-height:min(85vw,360px);padding:56px 6px 0;display:flex;align-items:flex-end;justify-content:center;overflow:visible}
+.alScene::before{content:'';position:absolute;left:0;right:0;bottom:-30px;height:60%;background:linear-gradient(180deg,transparent,#050a17 92%);pointer-events:none;z-index:0}
+.alFloor{position:absolute;left:-4%;right:-4%;bottom:-6px;height:42%;z-index:0;
+  background:radial-gradient(ellipse 60% 45% at 50% 62%,rgba(255,190,100,.2),transparent 70%),
+  repeating-conic-gradient(from 0deg at 50% 150%,#1b2236 0 4deg,#10162a 4deg 8deg);
+  -webkit-mask:radial-gradient(ellipse 80% 100% at 50% 100%,#000 55%,transparent 100%);mask:radial-gradient(ellipse 80% 100% at 50% 100%,#000 55%,transparent 100%);opacity:.9}
+.alBanner{position:absolute;top:26px;width:15%;max-width:84px;aspect-ratio:1/2.3;z-index:1;
+  background:radial-gradient(circle at 50% 38%,#e9b84a 0 9%,transparent 10%),linear-gradient(180deg,#3b2a78,#1f1650 80%);
+  clip-path:polygon(0 0,100% 0,100% 100%,50% 88%,0 100%);border-top:3px solid var(--al-gold);filter:drop-shadow(0 6px 8px #000a);opacity:.92}
+.alBanner::after{content:'';position:absolute;inset:6% 7% 14%;border:1.5px solid #e9b84a88;clip-path:polygon(0 0,100% 0,100% 100%,50% 90%,0 100%)}
+.alBanner.l{left:2%}.alBanner.r{right:2%}
+.alTorch{position:absolute;bottom:22%;width:34px;height:70px;z-index:1}
+.alTorch.l{left:1%}.alTorch.r{right:1%}
+.alTorch::before{content:'';position:absolute;left:6px;bottom:0;width:22px;height:30px;background:linear-gradient(180deg,#3a3f52,#161a28);border-radius:3px 3px 8px 8px;border:1px solid #556}
+.alTorch::after{content:'';position:absolute;left:3px;bottom:26px;width:28px;height:44px;border-radius:50% 50% 45% 45%/70% 70% 30% 30%;
+  background:radial-gradient(ellipse at 50% 75%,#fff4b0,#ffb52e 40%,#e0561a 70%,transparent 75%);transform-origin:50% 100%;animation:alFlame 1.6s ease-in-out infinite;filter:blur(.4px)}
+.alTorch.r::after{animation-delay:-.7s}
+@keyframes alFlame{0%,100%{transform:scale(1,1) skewX(0);opacity:.95}35%{transform:scale(.92,1.08) skewX(3deg);opacity:1}70%{transform:scale(1.05,.94) skewX(-3deg);opacity:.88}}
+
+#alPartySlot{position:relative;z-index:2;width:100%}
+#alRoot #hubPartyVisual{position:relative!important;inset:auto!important;right:auto!important;width:100%!important;height:auto!important;opacity:1!important;margin:0!important;padding:0 0 4px!important;
+  display:flex!important;align-items:flex-end;justify-content:center;gap:0!important;background:none!important;border:0!important;overflow:visible!important;transform:none!important}
+#alRoot #hubPartyVisual .hubPartyFace{position:relative!important;flex:0 1 calc(100%/var(--mg-slots,3));max-width:calc(100%/var(--mg-slots,3));min-width:0;width:auto!important;height:auto!important;margin:0 -1%!important;
+  padding:0 0 32px!important;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;transform:none!important}
+#alRoot #hubPartyVisual[style*="--mg-slots: 1"] .hubPartyFace{max-width:52%;flex-basis:52%}
+#alRoot #hubPartyVisual[style*="--mg-slots: 5"] .hubPartyFace{margin:0 -3%!important}
+#alRoot #hubPartyVisual .hubPartyFace::after{display:none!important}
+#alRoot #hubPartyVisual canvas{position:relative;z-index:2;width:100%!important;height:auto!important;aspect-ratio:180/220;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;
+  transform:scale(1.32);transform-origin:50% 100%;margin-bottom:-14px;filter:drop-shadow(0 8px 10px rgba(0,0,0,.55))}
+/* stone platform + shadow */
+#alRoot #hubPartyVisual .hubPartyFace::before{content:'';position:absolute;z-index:1;left:2%;right:2%;bottom:20px;height:44px;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 38%,#4a536e 0,#262d45 52%,#10152a 72%);
+  box-shadow:0 10px 0 -2px #0a0e1d,0 14px 18px #000c,inset 0 0 0 2px #6d7a9e55,inset 0 3px 8px #fff2}
+#alRoot #hubPartyVisual .hubPartyFace.alCaptain::before{background:radial-gradient(ellipse at 50% 38%,#6b5a2e 0,#33290f 55%,#14100a 74%);box-shadow:0 10px 0 -2px #0a0e1d,0 14px 20px #000c,inset 0 0 0 2px #f6c45399,0 0 22px #f6c45344}
+#alRoot #hubPartyVisual .hubPartyFace.alCaptain canvas{transform:scale(1.46)}
+#alRoot #hubPartyVisual .hubPartyFace.alCaptain{z-index:4;padding-bottom:36px!important}
+#alRoot #hubPartyVisual .hubPartyFace.alCaptain .hubPreviewBadge::before{content:'CAPTAIN';position:absolute;left:50%;top:calc(-1 * var(--al-captain-lift,130px));transform:translateX(-50%);padding:3px 9px 3px;
+   font:800 9.5px 'Cinzel',serif;letter-spacing:.14em;color:var(--al-gold);background:#070d1dd9;border:1px solid #f6c45388;border-radius:6px;white-space:nowrap}
+#alRoot #hubPartyVisual .hubPartyFace.alCaptain .hubPreviewBadge::after{content:'';position:absolute;left:50%;top:calc(-1 * var(--al-captain-lift,130px) - 22px);width:20px;height:16px;transform:translateX(-50%);background:var(--al-gold);
+  clip-path:polygon(0 100%,0 15%,25% 55%,50% 0,75% 55%,100% 15%,100% 100%);filter:drop-shadow(0 0 6px #f6c453)}
+#alRoot #hubPartyVisual .hubPreviewBadge{position:absolute!important;z-index:5;left:50%!important;right:auto!important;bottom:26px!important;transform:translateX(-50%);width:auto;max-width:96%;
+  padding:2px 6px!important;background:none!important;border:0!important;font:700 clamp(10px,3vw,13px) 'Cinzel',serif!important;letter-spacing:.06em;color:#eef3ff!important;text-transform:uppercase;text-shadow:0 2px 5px #000,0 0 3px #000;overflow:visible}
+#alRoot #hubPartyVisual .hubPartyEmpty{min-height:150px;color:#6c7ea6;font-size:40px;align-items:center;justify-content:center}
+
+/* Panels */
+.alStats,.alAi,.alCap,.alMode{background:linear-gradient(180deg,rgba(13,26,54,.94),rgba(6,11,25,.96));border:1px solid var(--al-line);border-radius:14px;box-shadow:0 6px 18px #0008,inset 0 1px 0 #ffffff0d}
+.alStats{position:relative;z-index:3;display:grid;grid-template-columns:auto 1fr;gap:10px 14px;align-items:center;padding:12px 14px;margin-top:6px}
+.alRank{display:flex;align-items:center;gap:10px;min-width:0}
+.alEmblem{width:44px;height:48px;color:#9fb4d9;flex:none;filter:drop-shadow(0 0 8px currentColor)}
+.alEmblem[data-tier="1"]{color:#c8d3ea}.alEmblem[data-tier="2"]{color:#f1c14e}.alEmblem[data-tier="3"]{color:#5ad2c6}.alEmblem[data-tier="4"]{color:#7ab6ff}.alEmblem[data-tier="5"]{color:#d58cff}.alEmblem[data-tier="0"]{color:#c58a5a}
+.alTier{font:700 17px/1.1 'Cinzel',serif}
+.alRP{font:600 15px 'Cinzel',serif;color:var(--al-gold)}.alRP b{font-weight:800}
+ .alRP.alTrialRP{font-size:0}.alRP.alTrialRP b{display:none}.alRP.alTrialRP::after{content:'LOCAL TRIAL';font-size:11px;letter-spacing:.08em}
+.alRec{border-left:1px solid var(--al-line);padding-left:14px;min-width:0}
+.alWL{font:800 16px 'Cinzel',serif;letter-spacing:.03em}
+.alWR{font-size:12px;font-weight:700;letter-spacing:.07em;color:#6fb0ff;margin-top:3px}
+.alEdit{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.alEdit small{font-size:11px;color:var(--al-mut)}
+.alEditBtn{width:100%;min-height:46px;display:flex;align-items:center;justify-content:center;gap:9px;border-radius:11px;cursor:pointer;color:var(--al-gold);
+  background:linear-gradient(180deg,#14224a,#0a1230);border:1.5px solid #c99a3a;font:700 15px 'Cinzel',serif;letter-spacing:.04em}
+.alEditBtn svg{width:19px;height:19px}
+
+.alCtl{display:grid;gap:8px;margin-top:8px}
+.alAi{display:flex;align-items:center;gap:10px;padding:9px 12px;min-height:48px}
+.alAiIc{width:34px;height:34px;flex:none;color:#cfe0ff;display:grid;place-items:center}.alAiIc svg{width:30px;height:30px}
+.alAi b{display:block;font:800 12px 'Cinzel',serif;letter-spacing:.08em}.alAi small{font-size:11px;color:var(--al-mut)}
+.alAi.manual b{color:var(--al-gold)}
+.alCap{padding:8px 12px}
+#alRoot .ccSel{margin:0!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 10px}
+#alRoot .ccTitle{font:800 12px 'Cinzel',serif!important;letter-spacing:.08em;text-transform:uppercase;color:var(--al-ink)!important;margin:0!important}
+#alRoot .ccSeg{display:flex!important;border-radius:999px;background:#060b1b;border:1px solid var(--al-line);padding:2px;gap:0;width:auto!important}
+#alRoot .ccSeg button{min-height:40px;min-width:76px;padding:0 14px!important;border-radius:999px!important;border:1px solid transparent!important;background:none!important;color:#a9b9da!important;font:800 12px 'Cinzel',serif!important;letter-spacing:.06em;cursor:pointer}
+#alRoot .ccSeg button.on{color:var(--al-gold)!important;border-color:var(--al-gold)!important;background:linear-gradient(180deg,#1a2a58,#0c1535)!important;box-shadow:0 0 10px #f6c45333}
+#alRoot .ccSeg button:disabled{opacity:.55}
+#alRoot .ccNote{grid-column:1/-1;font-size:10.5px!important;line-height:1.35;color:var(--al-mut)!important;margin:0!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+@media(min-width:460px){.alCtl{grid-template-columns:.9fr 1.3fr}.alCap .ccSel{grid-template-columns:1fr}.alCap .ccSeg{justify-self:stretch}.alCap .ccSeg button{flex:1;min-width:0}}
+
+.alMode{margin-top:8px;padding:10px 12px 12px}
+.alSecT{display:flex;align-items:center;gap:7px;font:800 12px 'Cinzel',serif;letter-spacing:.1em;color:var(--al-gold);margin-bottom:8px}
+.alSecT svg{width:16px;height:16px;color:#7fb4ff}
+#alRoot #hubModeMount{display:block!important}
+#alRoot #hubModeMount .modeRow{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important;width:100%;margin:0!important;left:auto!important;transform:none!important}
+#alRoot .modeLabel{display:none!important}
+#alRoot #hubModeMount .modeBtn{position:relative;min-height:56px;padding:6px 2px!important;border-radius:11px!important;border:1px solid var(--al-line)!important;background:linear-gradient(180deg,#0f1c3d,#08102a)!important;color:#d6e2fb!important;
+  font:700 clamp(12px,3.6vw,15px) 'Cinzel',serif!important;letter-spacing:.04em;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:2px;transform:none!important;box-shadow:none!important;cursor:pointer;white-space:nowrap}
+#alRoot #hubModeMount .modeBtn::before{content:'';width:20px;height:20px;background:currentColor;opacity:.8;
+  -webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+#alRoot #hubModeMount .modeBtn[data-size="1"]{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c0-5 4-8 8-8s8 3 8 8z'/%3E%3C/svg%3E")}
+#alRoot #hubModeMount .modeBtn[data-size="2"]{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='8' cy='8' r='3.5'/%3E%3Ccircle cx='17' cy='9' r='3'/%3E%3Cpath d='M1 20c0-4 3-7 7-7s7 3 7 7zM15 14c4 0 8 2 8 6h-6z'/%3E%3C/svg%3E")}
+#alRoot #hubModeMount .modeBtn[data-size="3"]{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 3l6 1 11 11-3 3L6 7zM21 3l-6 1-3 3 4 4 5-5zM4 20l4-4 3 3-4 4z'/%3E%3C/svg%3E")}
+#alRoot #hubModeMount .modeBtn[data-size="5"]{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='6' cy='8' r='3'/%3E%3Ccircle cx='12' cy='6' r='3'/%3E%3Ccircle cx='18' cy='8' r='3'/%3E%3Cpath d='M0 19c0-3 3-6 6-6h12c3 0 6 3 6 6v2H0z'/%3E%3C/svg%3E")}
+#alRoot #hubModeMount .modeBtn.selected{color:#fff3cf!important;border:1.5px solid var(--al-gold)!important;background:linear-gradient(180deg,#8a5a14,#3b2509)!important;box-shadow:0 0 16px #f6c45355,inset 0 1px 0 #ffe9a066!important}
+#alRoot #hubModeMount .modeBtn.selected::before{opacity:1;color:var(--al-gold)}
+#alRoot[data-size="2"] #hubModeMount .modeBtn.selected::after,#alRoot[data-size="3"] #hubModeMount .modeBtn.selected::after{content:'RANKED';font:800 8.5px 'Segoe UI',sans-serif;letter-spacing:.14em;color:#ffe3a0}
+
+/* FIND BATTLE */
+.alFind{margin-top:12px;position:relative}
+#alRoot #hubJoinBtn{position:relative;display:flex!important;flex-direction:column;align-items:center;justify-content:center;width:100%!important;min-width:0!important;min-height:92px!important;padding:12px 44px!important;border-radius:14px!important;cursor:pointer;
+  font-size:0!important;border:2px solid #fff0b0!important;color:#2a1704!important;
+  background:linear-gradient(180deg,#ffe28a 0,#f2b83a 38%,#c9861a 72%,#a56410 100%)!important;
+  box-shadow:0 0 0 3px #3a2508,0 0 0 4px #b9791c,0 10px 26px #000b,0 0 28px #f6c45344,inset 0 2px 0 #fff8,inset 0 -3px 0 #7a4a0a!important;transform:none;transition:transform .12s}
+#alRoot #hubJoinBtn:active{transform:translateY(2px) scale(.99)}
+#alRoot #hubJoinBtn:disabled{opacity:.6}
+#alRoot #hubJoinBtn::before{content:'FIND BATTLE';font:800 clamp(24px,7.4vw,34px)/1.05 'Cinzel',serif;letter-spacing:.05em;color:#2a1704;text-shadow:0 1px 0 #ffe9a099;position:static;background:none;width:auto;height:auto;opacity:1;transform:none;display:block}
+#alRoot #hubJoinBtn::after{content:attr(data-al-sub);position:static;display:block;margin-top:6px;font:700 12.5px/1.2 'Cinzel',serif;letter-spacing:.03em;color:#3b2307;background:none;border:0;inset:auto;transform:none;opacity:1}
+.alFind::before,.alFind::after{content:'';position:absolute;top:50%;width:18px;height:34px;margin-top:-17px;background:linear-gradient(180deg,#f6c453,#9a6212);clip-path:polygon(0 50%,100% 0,100% 100%);z-index:2;pointer-events:none}
+.alFind::before{left:-6px;clip-path:polygon(100% 50%,0 0,0 100%)}.alFind::after{right:-6px}
+.alFind::marker{display:none}
+
+/* Shortcuts */
+.alShort{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px}
+.alCard,#alRoot #hdHomeBtn{position:relative;min-height:84px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center;gap:5px;padding:9px 8px 9px 9px!important;text-align:left;cursor:pointer;width:100%!important;margin:0!important;
+  border-radius:13px!important;border:1px solid var(--al-line)!important;background:linear-gradient(180deg,rgba(14,28,60,.96),rgba(6,11,25,.97))!important;color:var(--al-ink)!important;box-shadow:0 6px 16px #0009!important;overflow:hidden}
+.alDunSlot{display:contents}
+.alCardIc{width:34px;height:30px;color:var(--al-gold);display:block}.alCardIc svg{width:100%;height:100%}
+.alCard.classes .alCardIc{color:#c8d3ea}
+.alCardTx b{display:block;font:800 12px 'Cinzel',serif;letter-spacing:.06em}
+.alCardTx small{display:block;font-size:9.5px;line-height:1.25;color:var(--al-mut);margin-top:2px}
+.alChev{position:absolute;right:6px;bottom:8px;width:14px;height:14px;color:#cfe0ff}.alChev svg{width:100%;height:100%}
+/* native dungeon card, restyled in place */
+#alRoot #hdHomeBtn{display:grid!important;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto;align-items:center!important;column-gap:6px;row-gap:2px}
+#alRoot #hdHomeBtn .hdIc{grid-row:1/3;width:30px;height:30px;color:#cdd7ee;display:block}
+#alRoot #hdHomeBtn .hdIc svg{width:100%;height:100%}
+#alRoot #hdHomeBtn .hdTxt{display:contents}
+#alRoot #hdHomeBtn .hdTtl{font-size:0;grid-column:2;grid-row:1}
+#alRoot #hdHomeBtn .hdTtl::before{content:'DUNGEON';font:800 12px 'Cinzel',serif;letter-spacing:.06em;color:var(--al-ink)}
+#alRoot #hdHomeBtn .hdSub{grid-column:1/-1;grid-row:3;font-size:9.5px!important;line-height:1.25;color:var(--al-mut)!important;white-space:normal;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+#alRoot #hdHomeBtn .hdClock{grid-column:2;grid-row:2;display:flex;align-items:center;gap:4px;background:none!important;border:0!important;padding:0!important;margin:0!important;color:var(--al-gold)}
+#alRoot #hdHomeBtn .hdClock small{display:none}
+#alRoot #hdHomeBtn .hdCv{font:800 14px 'Cinzel',serif;color:var(--al-gold);font-variant-numeric:tabular-nums}
+#alRoot #hdHomeBtn.hdDone .hdCv{color:#7fe3a0}
+
+/* More */
+.alMore{margin-top:14px;border:1px solid #1c2c52;border-radius:12px;background:rgba(6,11,25,.7)}
+.alMore summary{min-height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--al-mut);font:700 12px 'Cinzel',serif;letter-spacing:.12em;text-transform:uppercase;list-style:none}
+.alMore summary::-webkit-details-marker{display:none}
+.alMoreGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:4px 10px 12px}
+.alMoreGrid button,.alMoreBtn{min-height:44px;border-radius:10px;border:1px solid var(--al-line);background:#0a1330;color:#d6e2fb;font:700 12px 'Segoe UI',sans-serif;cursor:pointer;padding:6px 8px}
+#alRoot #tournamentResumeWarning{margin:8px 0}
+
+@media(min-width:700px){
+  #alRoot{max-width:760px;padding-bottom:40px}
+  .alScene{min-height:410px;margin:0}
+  .alTab{font-size:12px;min-height:60px}.alTab svg{width:28px;height:28px}
+  .alCtl{grid-template-columns:.9fr 1.3fr}
+  .alStats{grid-template-columns:auto 1fr auto}.alEdit{grid-column:auto;min-width:200px}
+  .alMoreGrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .alCard,#alRoot #hdHomeBtn{min-height:96px!important;padding:12px!important}
+  .alCardTx b,#alRoot #hdHomeBtn .hdTtl::before{font-size:14px}.alCardTx small,#alRoot #hdHomeBtn .hdSub{font-size:11px!important}
+}
+@media(max-width:359px){.alTab span{font-size:9px}.alShort{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.alTorch::after{animation:none}}
+
+/* Phone lobby: remove empty staging space, not character aspect ratios. */
+@media(max-width:699px){
+  #alRoot{padding-top:max(6px,env(safe-area-inset-top));padding-bottom:12px}
+  .alTop{display:grid;grid-template-columns:40px minmax(0,1fr) auto 44px 44px;gap:4px;min-height:44px}
+  .alAvatar{width:40px;height:40px;grid-column:1;grid-row:1}
+  .alAvatar .acctAvatar{width:36px;height:36px}
+  .alWho{grid-column:2;grid-row:1}
+  .alName{font-size:13px}.alMeta{font-size:11px}
+  .alGold{grid-column:3;grid-row:1;height:34px;gap:5px;padding:0 6px}
+  .alGold b{font-size:12px}.alCoin{width:15px;height:15px}
+  .alPlus{display:none}
+  #alRoot #mgNotifyBtn{grid-column:4;grid-row:1;z-index:5}
+  #alRoot #mgNotifyBtn svg,#alRoot #mgNotifyBadge{pointer-events:none}
+  #alGearSlot>.alIconBtn{grid-column:5;grid-row:1}
+  .alTabs{margin-top:6px}.alTab{min-height:44px;font-size:10px}.alTab svg{width:20px;height:20px}
+  .alScene{min-height:0;padding-top:24px}
+  .alBanner{top:10px;width:13%;max-width:65px}
+  .alStats{padding:8px 10px;gap:6px 10px;margin-top:2px}
+  .alEmblem{width:32px;height:36px}.alRank{gap:7px}.alTier{font-size:14px}.alRP{font-size:12px}
+  .alRec{padding-left:10px}.alWL{font-size:14px}.alWR{font-size:10px}
+  .alEditBtn{min-height:44px;font-size:13px}.alEdit small{display:none}
+  .alCtl{grid-template-columns:.7fr 1.3fr;gap:6px;margin-top:6px}
+  .alAi{padding:7px;gap:6px;min-width:0}.alAiIc{width:24px;height:24px}.alAiIc svg{width:24px;height:24px}
+  .alAi b{font-size:10px}.alAi small{font-size:10px;line-height:1.2}
+  .alCap{padding:6px 8px;min-width:0}
+  #alRoot .alCap .ccSel{grid-template-columns:1fr;gap:3px}
+  #alRoot .ccTitle{font-size:10px!important}
+  #alRoot .ccSeg{width:100%!important}
+  #alRoot .ccSeg button{flex:1;min-width:0;min-height:40px;padding:0 6px!important;font-size:11px!important}
+  #alRoot .ccNote{font-size:9px!important;-webkit-line-clamp:2}
+  .alMode{margin-top:6px;padding:7px 9px}
+  .alSecT{font-size:10px;margin-bottom:5px}
+  #alRoot #hubModeMount .modeBtn{min-height:44px;font-size:13px}
+  #alRoot #hubModeMount .modeBtn::before{width:16px;height:16px}
+  .alFind{margin-top:8px}
+  #alRoot #hubJoinBtn{min-height:72px;padding:8px 30px!important}
+  #alRoot #hubJoinBtn::before{font-size:26px}
+  #alRoot #hubJoinBtn::after{font-size:11px;margin-top:4px}
+  .alShort{margin-top:8px;gap:6px}
+  .alCard,#alRoot #hdHomeBtn{min-height:68px!important;padding:6px 7px!important;gap:3px}
+  .alCardIc{width:28px;height:24px}.alCardTx b{font-size:10px}.alCardTx small{font-size:9px}
+  #alRoot #hdHomeBtn .hdTtl::before{font-size:10px}
+  #alRoot #hdHomeBtn .hdCv{font-size:12px}
+  .alMore{margin-top:8px}
+}
+@media(max-width:699px) and (max-height:740px){
+  #alRoot #hubPartyVisual canvas{width:88%!important}
+  .alScene{padding-top:16px}
+  .alCardTx small{display:none}
+  .alCard,#alRoot #hdHomeBtn{min-height:60px!important}
+}
+
+/* Landscape phones: host viewport selects this even for a tall scrolling iframe.
+   Native controls stay mounted; More expands below, rather than getting clipped. */
+html[data-lobby-landscape] body.alLobby:not(.battleMode):not(.teamBuilderMode):has(#mainHub:not([style*="display: none"])) #app{padding:0!important;max-width:none!important;width:100%!important}
+html[data-lobby-landscape] body.alLobby #mainHub{margin:0!important;max-width:none!important}
+html[data-lobby-landscape] #alRoot{
+  max-width:none;display:grid;grid-template-columns:minmax(240px,.85fr) minmax(0,1.15fr);
+  grid-template-rows:44px auto auto auto auto auto;gap:4px 10px;
+  padding:6px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left))}
+html[data-lobby-landscape] .alBg{height:100%;background-size:cover}
+html[data-lobby-landscape] .alTop{
+  grid-column:1;grid-row:1;display:flex;gap:5px;min-height:44px}
+html[data-lobby-landscape] .alAvatar{width:34px;height:34px;overflow:hidden}
+html[data-lobby-landscape] .alAvatar .acctAvatar{width:30px;height:30px}
+html[data-lobby-landscape] .alName{font-size:11px}
+html[data-lobby-landscape] .alMeta{font-size:10px}
+html[data-lobby-landscape] .alGold{height:32px;padding:0 5px;gap:4px}
+html[data-lobby-landscape] .alGold b{font-size:11px}
+html[data-lobby-landscape] .alCoin{width:14px;height:14px}
+html[data-lobby-landscape] .alPlus{display:none}
+html[data-lobby-landscape] .alTabs{grid-column:2;grid-row:1;margin:0;border-radius:12px}
+html[data-lobby-landscape] .alTab{min-height:44px;font-size:10px;flex-direction:row;gap:4px}
+html[data-lobby-landscape] .alTab svg{width:19px;height:19px}
+html[data-lobby-landscape] .alScene{
+  grid-column:1;grid-row:2/5;min-height:0;margin:0;padding:26px 0 8px;align-items:center}
+html[data-lobby-landscape] .alBanner{top:18px;width:15%;max-width:65px}
+html[data-lobby-landscape] .alTorch{bottom:28%;transform:scale(.8)}
+html[data-lobby-landscape] #hubPartyVisual canvas{width:min(100%,100px)!important}
+html[data-lobby-landscape] #hubPartyVisual .hubPreviewBadge{font-size:9px!important;letter-spacing:0;overflow-wrap:anywhere;text-align:center}
+html[data-lobby-landscape] #hubPartyVisual .hubPartyEmpty{min-height:110px}
+html[data-lobby-landscape] .alStats{
+  grid-column:1;grid-row:5;margin:0;padding:4px 8px;gap:4px 8px;
+  grid-template-columns:auto minmax(0,1fr) auto}
+html[data-lobby-landscape] .alEmblem{width:26px;height:30px}
+html[data-lobby-landscape] .alRank{gap:5px}
+html[data-lobby-landscape] .alTier{font-size:10px}
+html[data-lobby-landscape] .alRP{font-size:11px}
+html[data-lobby-landscape] .alRec{padding-left:8px}
+html[data-lobby-landscape] .alWL{font-size:10px;white-space:nowrap}
+html[data-lobby-landscape] .alWR{display:none}
+html[data-lobby-landscape] .alEdit{grid-column:auto;min-width:0}
+html[data-lobby-landscape] .alEdit small{display:none}
+html[data-lobby-landscape] .alEditBtn{min-height:44px;font-size:10px;padding:0 5px;gap:4px;white-space:nowrap}
+html[data-lobby-landscape] .alEditBtn svg{width:15px}
+html[data-lobby-landscape] .alCtl{grid-column:2;grid-row:2;grid-template-columns:.65fr 1.35fr;margin:0;gap:4px}
+html[data-lobby-landscape] .alAi{min-width:0;padding:4px 6px;gap:5px}
+html[data-lobby-landscape] .alAiIc,html[data-lobby-landscape] .alAiIc svg{width:22px;height:22px}
+html[data-lobby-landscape] .alAi b{font-size:9px}
+html[data-lobby-landscape] .alAi small{font-size:9px;line-height:1.15;display:block}
+html[data-lobby-landscape] .alCap{min-width:0;padding:4px 6px}
+html[data-lobby-landscape] #alRoot .ccSel{grid-template-columns:auto 1fr;gap:2px 5px}
+html[data-lobby-landscape] #alRoot .ccTitle{font-size:9px!important;max-width:60px}
+html[data-lobby-landscape] #alRoot .ccSeg{width:100%!important}
+html[data-lobby-landscape] #alRoot .ccSeg button{flex:1;min-width:0;min-height:40px;padding:0 5px!important;font-size:10px!important}
+html[data-lobby-landscape] #alRoot .ccNote{font-size:9px!important;-webkit-line-clamp:1}
+html[data-lobby-landscape] .alMode{grid-column:2;grid-row:3;margin:0;padding:4px 6px}
+html[data-lobby-landscape] .alSecT{font-size:9px;margin-bottom:3px}
+html[data-lobby-landscape] .alSecT svg{width:12px;height:12px}
+html[data-lobby-landscape] #alRoot #hubModeMount .modeRow{gap:4px!important}
+html[data-lobby-landscape] #alRoot #hubModeMount .modeBtn{min-height:44px!important;font-size:12px!important;padding:2px!important}
+html[data-lobby-landscape] #alRoot #hubModeMount .modeBtn::before{width:14px;height:14px}
+html[data-lobby-landscape] .alFind{grid-column:2;grid-row:4;margin:0}
+html[data-lobby-landscape] #alRoot #hubJoinBtn{min-height:54px!important;padding:5px 20px!important}
+html[data-lobby-landscape] #alRoot #hubJoinBtn::before{font-size:21px!important}
+html[data-lobby-landscape] #alRoot #hubJoinBtn::after{font-size:10px!important;margin-top:3px}
+html[data-lobby-landscape] .alShort{grid-column:2;grid-row:5;margin:0;gap:4px}
+html[data-lobby-landscape] .alCard,html[data-lobby-landscape] #alRoot #hdHomeBtn{min-height:44px!important;padding:4px 6px!important;gap:4px;flex-direction:row!important;align-items:center!important}
+html[data-lobby-landscape] .alCardIc{width:23px;height:23px;flex:none}
+html[data-lobby-landscape] .alCardTx b,html[data-lobby-landscape] #alRoot #hdHomeBtn .hdTtl::before{font-size:10px}
+html[data-lobby-landscape] .alCardTx small,html[data-lobby-landscape] #alRoot #hdHomeBtn .hdSub{display:none!important}
+html[data-lobby-landscape] #alRoot #hdHomeBtn{grid-template-rows:auto auto;row-gap:0}
+html[data-lobby-landscape] #alRoot #hdHomeBtn .hdIc{width:24px;height:24px}
+html[data-lobby-landscape] #alRoot #hdHomeBtn .hdCv{font-size:11px}
+html[data-lobby-landscape] .alMore{grid-column:1/-1;grid-row:7;margin:0}
+html[data-lobby-landscape] #tournamentResumeWarning{grid-column:1/-1}
+
+/* Beat the legacy controller's late, !important button styles without shrinking
+   touch targets. The AI status already provides the Captain's helper text. */
+html[data-lobby-landscape] body.alLobby #alRoot .ccNote{display:none!important}
+html[data-lobby-landscape] body.alLobby #alRoot #hubModeMount .modeBtn{
+  min-height:44px!important;flex-direction:row!important;gap:4px!important;line-height:1!important}
+html[data-lobby-landscape] body.alLobby #alRoot #hubModeMount .modeBtn::before{
+  width:14px!important;height:14px!important}
+html[data-lobby-landscape] body.alLobby #alRoot #hubModeMount .modeBtn::after{
+  position:absolute;bottom:2px;left:0;right:0;text-align:center}
+html[data-lobby-landscape] body.alLobby #alRoot #hubJoinBtn{min-height:54px!important;line-height:1!important}
+html[data-lobby-landscape] body.alLobby #alRoot #hubJoinBtn::before{
+  font-size:21px!important;line-height:1.05!important}
+html[data-lobby-landscape] body.alLobby #alRoot #hubJoinBtn::after{
+  font-size:10px!important;line-height:1.2!important;margin-top:3px!important}
+
+.alCard.battlepass{border-color:#c99a3a!important}.alCard.battlepass .alCardIc{color:var(--al-gold)}

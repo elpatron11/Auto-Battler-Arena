@@ -1,0 +1,10 @@
+[
+  {"name":"Bronze","minimum":0,"gold":0,"divisions":3,"color":"#c68b60"},
+  {"name":"Silver","minimum":1200,"gold":100,"divisions":3,"color":"#c7d2e1"},
+  {"name":"Gold","minimum":1400,"gold":200,"divisions":3,"color":"#ffd166"},
+  {"name":"Platinum","minimum":1600,"gold":350,"divisions":3,"color":"#72ddd3"},
+  {"name":"Diamond","minimum":1800,"gold":500,"divisions":3,"color":"#85bfff"},
+  {"name":"Master","minimum":2000,"gold":750,"divisions":1,"color":"#c494ff"},
+  {"name":"Grandmaster","minimum":2200,"gold":1000,"divisions":1,"color":"#ff787f"},
+  {"name":"Gladiator","minimum":2400,"gold":0,"divisions":1,"color":"#ffd568"}
+]

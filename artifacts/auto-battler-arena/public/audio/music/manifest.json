@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "tracks": {
+    "menu": {
+      "title": "A New Town (RPG Theme)",
+      "file": "menu.mp3",
+      "creator": "The Cynic Project / cynicmusic",
+      "creatorWebsite": "https://cynicmusic.com",
+      "sourcePage": "https://opengameart.org/content/a-new-town-rpg-theme",
+      "sourceDownload": "https://opengameart.org/sites/default/files/025_A_New_Town.mp3",
+      "original": "025_A_New_Town.mp3",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceSha256": "8a83b97f06cad1052eea0a3fa8f65966db742e68275a1d82816773c820578ad2",
+      "sha256": "af31662cf1b9555cdfa7aea56ec3d0b1ce3d5687223196eb62916ad31a8a777c",
+      "bytes": 872638,
+      "duration": 62.302041,
+      "edits": "Full composition retained; -22 LUFS/-3 dBTP normalization target; final peak safety limiter; stereo 44.1kHz MP3 112kbps."
+    },
+    "battle": {
+      "title": "Battle Theme A",
+      "file": "battle.mp3",
+      "creator": "The Cynic Project / cynicmusic",
+      "creatorWebsite": "https://cynicmusic.com",
+      "sourcePage": "https://opengameart.org/content/battle-theme-a",
+      "sourceDownload": "https://opengameart.org/sites/default/files/battleThemeA.mp3",
+      "original": "battleThemeA.mp3",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceSha256": "6042399782e581d753d616bc703e66483d5eccb5fb687a20c9a552d68c49e620",
+      "sha256": "e8d3520d4e45d3d2b3ede842a0e18fb9f4cf5811f19e48f61594455b7feb4678",
+      "bytes": 1342947,
+      "duration": 95.89551,
+      "edits": "Full composition retained; -22 LUFS/-3 dBTP normalization target; final peak safety limiter; stereo 44.1kHz MP3 112kbps."
+    }
+  }
+}

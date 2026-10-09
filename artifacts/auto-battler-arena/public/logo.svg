@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" role="img" aria-label="Auto Battler Arena">
+  <path d="M30 2 57 15v34L30 62 3 49V15Z" fill="#EFC563"/>
+  <path d="m30 13 15 32h-9l-2-5h-9l-2 5h-9Zm0 12-4 9h8Z" fill="#111722"/>
+  <text x="70" y="28" font-family="sans-serif" font-size="19" font-weight="900" fill="#F0E9D7" letter-spacing="1">AUTO BATTLER</text>
+  <text x="70" y="49" font-family="sans-serif" font-size="19" font-weight="900" fill="#EFC563" letter-spacing="3">ARENA</text>
+</svg>

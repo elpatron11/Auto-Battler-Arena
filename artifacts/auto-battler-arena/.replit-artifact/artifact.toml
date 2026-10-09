@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Fantasy World Arenas"
+description = "Fantasy World Arenas is an installable tactical auto-battler where players build teams, challenge player defenses, and review their match stats and replays."
+version = "1.0.0"
+id = "artifacts/auto-battler-arena"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18236
+
+[services.development]
+run = "pnpm --filter @workspace/auto-battler-arena run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/auto-battler-arena", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/auto-battler-arena/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18236"
+BASE_PATH = "/"

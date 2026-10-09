@@ -1,0 +1,426 @@
+/* Fantasy World Arenas — compact command deck. Loaded after the legacy game styles. */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=DM+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap");
+
+body.mobileGameUX {
+  --mg-abyss: #080e1a;
+  --mg-deep: #101a2b;
+  --mg-panel: #172338;
+  --mg-raised: #1d2b43;
+  --mg-line: #354761;
+  --mg-gold: #e1ba72;
+  --mg-gold-pale: #f4dfac;
+  --mg-ink: #f1e9d9;
+  --mg-muted: #a6b1c3;
+  --mg-cyan: #8fbeca;
+  --mg-danger: #d79b8f;
+  background: radial-gradient(ellipse 90% 35% at 50% 0%, #243550 0%, transparent 75%), var(--mg-abyss) !important;
+  color: var(--mg-ink);
+  font-family: "DM Sans", sans-serif;
+  min-height: 100dvh;
+}
+body.mobileGameUX #mainHub .ar-quick-nav { grid-template-columns: repeat(3,minmax(0,1fr)) !important; }
+body.mobileGameUX.guest-mode #mainHub .ar-quick-nav { grid-template-columns: repeat(2,minmax(0,1fr)) !important; }
+body.mobileGameUX #mainHub .hubPlayHint { display: none; }
+body.mobileGameUX #mainHub .ar-menu-more > button { min-height: 44px; margin: 4px 8px; width: calc(100% - 16px); }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .stHint,
+body.mobileGameUX.teamBuilderMode #savedTeamsDetails > summary { display: none !important; }
+body.mobileGameUX.teamBuilderMode #savedTeamsDetails { border: 0; margin-top: 0; background: none; }
+body.mobileGameUX .mobileSavedSlot { display: grid !important; grid-template-columns: 42px minmax(0,1fr) auto !important; }
+body.mobileGameUX .mobileSavedSlot button { min-height: 44px !important; }
+body.mobileGameUX #mgSlotContent { padding: 10px 12px; }
+body.mobileGameUX .mg-hero-disclosure > summary { min-height: 44px; display: flex; align-items: center; color: var(--mg-gold-pale); font-weight: 700; font-size: 12px; }
+body.mobileGameUX .mg-fixed-spell { padding: 7px 0; font-size: 11px; }
+body.mobileGameUX .mg-fixed-spell small { display: block; font-size: 10px; color: var(--mg-muted); }
+body.mobileGameUX .mg-sheet-head button { min-width: 44px !important; min-height: 44px !important; }
+body.mobileGameUX *, body.mobileGameUX *::before, body.mobileGameUX *::after { box-sizing: border-box; }
+body.mobileGameUX button { cursor: pointer; font-family: "DM Sans", sans-serif; -webkit-tap-highlight-color: transparent; }
+body.mobileGameUX button:disabled { cursor: not-allowed; opacity: .48; }
+body.mobileGameUX :is(button, summary, input):focus-visible { outline: 2px solid var(--mg-gold-pale) !important; outline-offset: 2px; }
+body.mobileGameUX:not(.battleMode) #app { width: 100%; max-width: 680px !important; margin-inline: auto; padding: max(8px, env(safe-area-inset-top)) 10px max(24px, env(safe-area-inset-bottom)) !important; }
+
+/* The account strip is a utility, not the first act of the game. Secondary
+   controls are moved into a More disclosure by the companion script. */
+body.mobileGameUX:not(.teamBuilderMode):not(.battleMode) #accountBar {
+  display: flex !important; align-items: center; flex-wrap: wrap; gap: 7px;
+  min-height: 0 !important; max-width: 640px; margin: 0 auto 8px !important;
+  padding: 6px 9px !important; border: 1px solid var(--mg-line) !important;
+  border-radius: 10px !important; background: #121e31 !important; box-shadow: none !important;
+}
+body.mobileGameUX #accountBar .acctLeft { min-width: 0; gap: 7px; }
+body.mobileGameUX #accountBar .acctAvatar { flex: none; width: 42px; height: 42px; border-radius: 50%; font-size: 21px; background: #253550; display: grid; place-items: center; }
+body.mobileGameUX #accountBar .mg-market-icon { display: grid; place-items: center; width: 42px; min-width: 42px; height: 42px; padding: 9px; border: 1px solid #8c7855; border-radius: 9px; color: var(--mg-gold-pale); background: #283348; }
+body.mobileGameUX #accountBar .mg-market-icon svg { width: 22px; height: 22px; }
+/* Find Battle already owns AI, Tournament and PvP entry. Keep one Defense
+   destination and retain hidden legacy buttons for their existing handlers. */
+body.mobileGameUX #mainHub .ar-menu-more :is(#hubTournamentBtn,#hubArenaBtn,#hubJoinTournamentBtn,#hubOnlineActionBtn,#defenseBtn,#profileBtn) { display: none !important; }
+body.mobileGameUX #accountBar #accountName { max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--mg-ink); font-size: 11px; }
+body.mobileGameUX #accountBar #accountMeta { color: var(--mg-muted); font-size: 9px; }
+body.mobileGameUX #accountBar #goldDisplay { color: var(--mg-gold-pale) !important; font-size: 11px; white-space: nowrap; }
+body.mobileGameUX #accountBar > div:last-child { min-width: 0; margin-left: auto; gap: 5px !important; }
+body.mobileGameUX #accountBar :is(.mg-account-more, .mg-account-menu) { position: relative; }
+body.mobileGameUX #accountBar .mg-account-more > summary {
+  display: flex; align-items: center; min-height: 36px; padding: 6px 10px;
+  border: 1px solid var(--mg-line); border-radius: 7px; color: var(--mg-gold-pale);
+  background: #1b2a40; font-size: 11px; font-weight: 700; cursor: pointer; list-style: none;
+}
+body.mobileGameUX #accountBar .mg-account-more > summary::-webkit-details-marker { display: none; }
+body.mobileGameUX #accountBar .mg-account-more > summary::after { content: "⌄"; margin-left: 7px; }
+body.mobileGameUX #accountBar .mg-account-more[open] > :is(.mg-account-actions, .mg-account-content, .mg-more-content) {
+  position: absolute; z-index: 30; top: calc(100% + 5px); right: 0;
+  display: grid; gap: 5px; width: min(240px, calc(100vw - 24px)); padding: 8px;
+  border: 1px solid #52617a; border-radius: 10px; background: #111c2e;
+  box-shadow: 0 15px 40px #030712b8;
+}
+body.mobileGameUX #accountBar .mg-account-more button { min-height: 40px; width: 100%; text-align: left; color: var(--mg-ink) !important; background: #1b2a40 !important; border: 1px solid var(--mg-line) !important; border-radius: 7px; }
+
+/* Home: live party artwork is the masthead. */
+body.mobileGameUX:not(.battleMode) #mainHub {
+  max-width: 640px; margin: 0 auto 12px; overflow: visible !important;
+  border: 1px solid #445572; border-radius: 15px;
+  background: radial-gradient(ellipse at 50% 0%, #304365 0%, transparent 50%), linear-gradient(155deg, #18253b, #0d1625 80%);
+  color: var(--mg-ink); box-shadow: 0 15px 40px #030813a8;
+}
+body.mobileGameUX #mainHub .hubHero { display: block; min-height: 0; padding: 10px 11px 0 !important; background: none; }
+body.mobileGameUX #mainHub .hubHero::before { display: none; }
+body.mobileGameUX #mainHub .hubHeroCopy { max-width: none; }
+body.mobileGameUX #mainHub .hubEyebrow { color: var(--mg-gold); font: 700 9px "Space Mono", monospace; letter-spacing: .17em; }
+body.mobileGameUX #mainHub :is(.hubTitle, .hubSub) { display: none !important; }
+body.mobileGameUX #mainHub #hubPartyVisual {
+  position: relative; right: auto; bottom: auto; display: flex !important; justify-content: center; align-items: stretch;
+  width: 100%; height: clamp(102px, 29vw, 148px); gap: 5px; margin: 8px 0 0; opacity: 1; pointer-events: none;
+}
+body.mobileGameUX #mainHub #hubPartyVisual .hubPartyFace {
+  flex: 1 1 0; width: 0; max-width: 118px; height: 100%; margin: 0; overflow: hidden;
+  border: 1px solid #64728a; border-radius: 8px; background: #142037;
+  box-shadow: inset 0 0 0 1px #dbb66e25; transform: none !important;
+}
+body.mobileGameUX #mainHub #hubPartyVisual .hubPartyFace.livePreview canvas { width: 100%; height: 100%; object-fit: cover; filter: none; }
+body.mobileGameUX #mainHub #hubPartyVisual .hubPartyFace.livePreview::after { background: linear-gradient(transparent 42%, #07101de8); }
+body.mobileGameUX #mainHub #hubPartyVisual .hubPartyEmpty { background: repeating-linear-gradient(135deg, #17243a, #17243a 9px, #1c2a40 9px, #1c2a40 18px); color: #8896aa; }
+body.mobileGameUX #mainHub #hubPartyVisual .hubPartyEmpty::before { bottom: 10px; color: var(--mg-muted); }
+body.mobileGameUX #mainHub .hubPreviewBadge { left: 2px; right: 2px; bottom: 2px; font: 600 clamp(8px, 2.5vw, 11px) "Cinzel", serif; color: var(--mg-ink); }
+body.mobileGameUX #mainHub .hubPreviewRace { top: 3px; left: 3px; }
+body.mobileGameUX #mainHub .hubPreviewPet { right: 3px; bottom: 29px; width: 24px; height: 24px; }
+body.mobileGameUX #mainHub .hubBody { padding: 0 10px 11px; }
+body.mobileGameUX #mainHub .hubTeamBar {
+  margin: 8px 0 !important; padding: 9px 10px; border: 1px solid #43536a;
+  border-radius: 9px; background: #172337; color: var(--mg-ink);
+}
+body.mobileGameUX #mainHub .ar-team-head { align-items: center; gap: 6px; }
+body.mobileGameUX #mainHub .ar-label { color: var(--mg-gold); font-size: 8px; }
+body.mobileGameUX #mainHub .ar-team-name { margin-top: 2px; color: var(--mg-ink); font: 600 14px "Cinzel", serif; }
+body.mobileGameUX #mainHub .ar-record { color: var(--mg-muted); font-size: 8px; }
+body.mobileGameUX #mainHub .ar-team-meta { align-items: center; gap: 12px; margin-top: 7px; padding-top: 7px; border-color: #34435b; }
+body.mobileGameUX #mainHub .ar-team-meta strong { color: var(--mg-gold-pale); font-size: 11px; }
+body.mobileGameUX #mainHub .ar-team-meta span { color: var(--mg-muted); font-size: 7px; }
+body.mobileGameUX #mainHub .ar-edit-squad { min-height: 36px; margin-left: auto; padding: 5px 9px; border: 1px solid #8c7855; background: #273145; color: var(--mg-gold-pale); font-size: 10px; }
+body.mobileGameUX #mainHub .hubPlayPanel {
+  margin: 0 0 8px; padding: 9px; border: 1px solid #45536b;
+  border-radius: 10px; background: #111c2e; box-shadow: none;
+}
+body.mobileGameUX #mainHub .hubPlayTitle { color: var(--mg-gold); font-size: 9px; }
+body.mobileGameUX #mainHub .hubPlayHint { margin-top: 2px; color: var(--mg-muted); font-size: 10px; }
+body.mobileGameUX #mainHub .hubPlayControls { gap: 7px; margin-top: 7px; }
+body.mobileGameUX #mainHub #hubModeMount .modeRow {
+  position: static; left: auto; transform: none; width: 100%; display: grid !important;
+  grid-template-columns: repeat(4,minmax(0,1fr)); gap: 4px !important; margin: 0 !important;
+  padding: 4px !important; border: 1px solid #394962 !important; border-radius: 8px;
+  background: #0c1728 !important; box-shadow: none !important;
+}
+body.mobileGameUX #mainHub #hubModeMount .modeLabel { margin: 0; color: var(--mg-muted); font-size: 8px; }
+body.mobileGameUX #mainHub #hubModeMount .modeBtn {
+  min-height: 38px; padding: 5px 2px; border: 1px solid transparent !important;
+  border-radius: 6px; color: #b8c5d3; background: transparent !important; font: 700 10px "Space Mono",monospace;
+}
+body.mobileGameUX #mainHub #hubModeMount .modeBtn:is(.selected,.active) { border-color: #b99860 !important; background: #3a3440 !important; color: var(--mg-gold-pale) !important; box-shadow: none !important; }
+body.mobileGameUX #mainHub #hubJoinBtn {
+  width: 100%; min-height: 54px; padding: 8px 13px; border: 1px solid #f0d595;
+  border-radius: 8px; background: linear-gradient(105deg,#f0d490,#c69d57); color: #162035;
+  box-shadow: inset 0 1px #fff5cc80,0 5px 15px #0006; font-size: 0 !important;
+}
+body.mobileGameUX #mainHub #hubJoinBtn::before { color: #172034; font: 700 13px "Space Mono", monospace; }
+body.mobileGameUX #mainHub #hubJoinBtn::after { margin-top: 2px; color: #473a28; font-size: 10px; }
+body.mobileGameUX #mainHub .ar-quick-nav { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 5px; margin: 8px 0; }
+body.mobileGameUX #mainHub .ar-quick-nav > :is(.hubCard,#hubArenaRankingsBtn) {
+  min-height: 53px !important; padding: 5px 2px !important; gap: 2px;
+  border: 1px solid #3a4b64; border-radius: 8px; background: #1a2940; color: var(--mg-ink);
+}
+body.mobileGameUX #mainHub .ar-quick-nav > .hubCard .hi { font-size: 15px; }
+body.mobileGameUX #mainHub .ar-quick-nav .mg-arena-icon { display: block; width: 22px; height: 22px; color: var(--mg-gold-pale); }
+body.mobileGameUX #mainHub .ar-quick-nav > .hubCard b { font-size: 9px; }
+body.mobileGameUX #mainHub .ar-quick-nav > #hubArenaRankingsBtn { font-size: 9px; }
+body.mobileGameUX #mainHub .ar-menu-more { display: none !important; }
+body.mobileGameUX #mainHub .ar-menu-more > summary { min-height: 40px; padding: 11px; color: var(--mg-muted); font-size: 11px; }
+body.mobileGameUX #mainHub .ar-menu-more[open] > summary { color: var(--mg-gold-pale); }
+body.mobileGameUX #mainHub .ar-menu-more .hubCard { background: #1a2940; border-color: #41516b; }
+body.mobileGameUX #mainHub .ar-menu-more :is(.hubTourStrip,.hubTournamentActions) button { min-height: 44px; }
+
+/* Squad: the slots are the editor, not the old roster grid. */
+body.mobileGameUX.teamBuilderMode #selectScreen { padding: 0 2px 18px !important; background: none; color: var(--mg-ink); }
+body.mobileGameUX.teamBuilderMode .teamBuilderHead {
+  max-width: 640px; margin: 0 auto 7px !important; padding: 9px 11px !important;
+  border: 1px solid #45546c; border-radius: 10px; background: #172338;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+body.mobileGameUX.teamBuilderMode .teamBuilderHead h2 { margin: 0; color: var(--mg-ink); font: 600 17px "Cinzel",serif; }
+body.mobileGameUX.teamBuilderMode .teamBuilderHead > div > div { color: var(--mg-muted); font-size: 10px; }
+body.mobileGameUX.teamBuilderMode #teamBuilderBackBtn { min-height: 40px; color: var(--mg-gold-pale); background: #26354d; border: 1px solid #766c60; }
+body.mobileGameUX.teamBuilderMode .ar-squad-mode {
+  max-width: 640px; margin: 0 auto 8px; padding: 4px; gap: 4px;
+  border: 1px solid #394962; border-radius: 8px; background: #0d1829;
+}
+body.mobileGameUX.teamBuilderMode .ar-squad-mode-label { color: var(--mg-gold); font-size: 8px; }
+body.mobileGameUX.teamBuilderMode .ar-squad-mode button { min-height: 38px; padding: 5px 2px; color: var(--mg-muted); font: 700 10px "Space Mono",monospace; }
+body.mobileGameUX.teamBuilderMode .ar-squad-mode button[aria-pressed="true"] { border-color: #ac905c; background: #383440; color: var(--mg-gold-pale); }
+body.mobileGameUX.teamBuilderMode .ar-squad-active {
+  max-width: 640px; margin: 0 auto 9px; padding: 11px;
+  border: 1px solid #53617a; border-radius: 12px;
+  background: radial-gradient(ellipse at 50% 0%,#263752,#172338 65%);
+}
+body.mobileGameUX.teamBuilderMode .ar-squad-active-head strong { color: var(--mg-ink); font: 600 15px "Cinzel",serif; }
+body.mobileGameUX.teamBuilderMode .ar-squad-active-head small { color: var(--mg-muted); }
+body.mobileGameUX.teamBuilderMode .ar-squad-active-count { color: var(--mg-gold); font-size: 8px; }
+body.mobileGameUX.teamBuilderMode #teamSlots {
+  display: grid !important; width: 100%; max-width: 314px;
+  grid-template-columns: repeat(var(--mg-slots, 3), minmax(0,1fr)) !important;
+  justify-content: center !important; align-items: stretch !important;
+  gap: 7px !important; margin: 10px auto 0 !important;
+}
+body.mobileGameUX.teamBuilderMode #teamSlots:has(> :first-child:last-child) { max-width: 100px; }
+body.mobileGameUX.teamBuilderMode #teamSlots:has(> :nth-child(2):last-child) { max-width: 207px; }
+body.mobileGameUX.teamBuilderMode #teamSlots:has(> :nth-child(3):last-child) { max-width: 314px; }
+body.mobileGameUX.teamBuilderMode #teamSlots:has(> :nth-child(5):last-child) { max-width: 528px; }
+body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot,
+body.mobileGameUX.teamBuilderMode #teamSlots .slot {
+  position: relative; display: flex; flex-direction: column; justify-content: end; align-items: center;
+  width: 100% !important; height: min(27vw, 105px) !important; min-height: 75px !important;
+  padding: 0 !important; margin: 0 !important; overflow: hidden; isolation: isolate;
+  border: 1px dashed #71819a !important; border-radius: 8px !important;
+  background: linear-gradient(155deg,#25354d,#101c2d) !important; color: var(--mg-ink);
+  box-shadow: inset 0 0 0 1px #ffffff0c !important; font-size: 13px !important; text-align: center;
+}
+body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot:is(.filled,[data-filled="true"]),
+body.mobileGameUX.teamBuilderMode #teamSlots .slot.filled { border: 1px solid #a28c67 !important; background: #142035 !important; }
+body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot:is(.captain,[data-captain="true"]),
+body.mobileGameUX.teamBuilderMode #teamSlots .slot.captain { border-color: #eccb83 !important; box-shadow: inset 0 0 0 1px #e3bd7147 !important; }
+body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot-art { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; }
+body.mobileGameUX.teamBuilderMode #teamSlots :is(.mg-slot-art img,.mg-slot > img,.slot > img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
+body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot-name,
+body.mobileGameUX.teamBuilderMode #teamSlots .ar-slot-label {
+  position: relative; z-index: 1; display: block; inset: auto; width: 100%; margin: 0;
+  padding: 16px 2px 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  background: linear-gradient(transparent,#08111fee 65%); color: var(--mg-ink);
+  font: 600 clamp(8px,2.6vw,11px) "Cinzel",serif;
+}
+body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot-empty { margin: auto; color: var(--mg-muted); font: 700 9px "Space Mono",monospace; letter-spacing: .03em; }
+body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot-captain {
+  position: absolute; z-index: 2; top: 3px; left: 3px; padding: 2px 4px;
+  border-radius: 3px; background: #d9b778; color: #172035; font: 700 8px "Space Mono",monospace;
+}
+body.mobileGameUX.teamBuilderMode #teamActionRow:empty { display: none !important; }
+body.mobileGameUX.teamBuilderMode #teamActionRow { max-width: 640px; min-height: 0; margin: 0 auto !important; padding: 0 !important; border: 0; background: none; box-shadow: none; }
+body.mobileGameUX.teamBuilderMode #classGrid,
+body.mobileGameUX.teamBuilderMode .ar-roster-heading { display: none !important; }
+body.mobileGameUX.teamBuilderMode .ar-strategy-heading { display: none; }
+body.mobileGameUX.teamBuilderMode details.mg-strategy {
+  max-width: 640px; margin: 0 auto 9px; overflow: hidden;
+  border: 1px solid #3e4f67; border-radius: 9px; background: #131f32;
+}
+body.mobileGameUX.teamBuilderMode details.mg-strategy > summary {
+  display: flex; align-items: center; min-height: 44px; padding: 10px 12px;
+  color: var(--mg-gold-pale); font: 700 11px "DM Sans",sans-serif; cursor: pointer;
+}
+body.mobileGameUX.teamBuilderMode details.mg-strategy > summary::after { content: "⌄"; margin-left: auto; }
+body.mobileGameUX.teamBuilderMode details.mg-strategy[open] > summary::after { transform: rotate(180deg); }
+body.mobileGameUX.teamBuilderMode #underTeamActions {
+  max-width: 640px; margin: 0 auto 9px !important; padding: 9px;
+  border: 1px solid #3e4f67; border-radius: 9px; background: #131f32;
+}
+body.mobileGameUX.teamBuilderMode details.mg-strategy #underTeamActions { margin: 0 !important; border: 0; border-top: 1px solid #34445d; border-radius: 0; }
+body.mobileGameUX.teamBuilderMode details.mg-strategy button {
+  min-height: 44px; border: 1px solid #596a82;
+  border-radius: 7px; background: #26354d; color: var(--mg-ink);
+}
+body.mobileGameUX.teamBuilderMode details.mg-strategy > button {
+  width: calc(100% - 18px); margin: 0 9px 9px;
+}
+body.mobileGameUX.teamBuilderMode #underTeamActions :is(button,#racialPickBtn) {
+  min-height: 44px !important; border: 1px solid #596a82 !important;
+  border-radius: 7px; background: #26354d !important; color: var(--mg-ink) !important;
+}
+body.mobileGameUX.teamBuilderMode #underTeamActions #mirrorLabel { min-height: 44px; color: var(--mg-muted) !important; }
+body.mobileGameUX.teamBuilderMode #underTeamActions #mirrorToggle { accent-color: var(--mg-gold); }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel {
+  max-width: 640px; margin: 0 auto 8px; padding: 10px;
+  border: 1px solid #3e4f67; border-radius: 10px; background: #121e30;
+}
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .stHead { align-items: center; gap: 6px; }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .stTitle { color: var(--mg-ink); font: 600 14px "Cinzel",serif; }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .stHint { color: var(--mg-muted); font-size: 9px; }
+body.mobileGameUX.teamBuilderMode #savedTeamsDetails { margin-top: 7px; border: 1px solid #34445d; border-radius: 8px; background: #0e192a; }
+body.mobileGameUX.teamBuilderMode #savedTeamsDetails > summary { min-height: 44px; padding: 12px; color: var(--mg-gold-pale); }
+body.mobileGameUX.teamBuilderMode #savedTeamCards {
+  display: grid; grid-template-columns: 1fr; gap: 5px; margin-top: 8px;
+}
+/* Current saved-squad renderer: five compact primary slots, with management
+   remaining available in its separate disclosure. */
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mobileSavedPrimary {
+  display: grid; grid-template-columns: minmax(0,1fr); gap: 6px;
+  width: 100%; margin-top: 8px;
+}
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mobileSavedSlot {
+  display: flex; align-items: center; gap: 7px; min-width: 0;
+  min-height: 54px; padding: 5px 7px;
+  border: 1px solid #40516b; border-radius: 8px; background: #1a2940;
+}
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mobileSavedSlot :is(label,.mobileSavedLabel,strong) {
+  flex: none; color: var(--mg-gold); font: 700 9px "Space Mono",monospace;
+  letter-spacing: .04em;
+}
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mobileSavedSlot :is(.mobileSavedSummary,.mobileSavedComp,summary) {
+  flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; color: var(--mg-ink); font: 600 11px "Cinzel",serif;
+}
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mobileSavedSlot img {
+  flex: none; width: 29px; height: 34px; object-fit: cover;
+  border: 1px solid #68778e; border-radius: 4px;
+}
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mobileSavedSlot button {
+  flex: none; min-width: 44px; min-height: 44px; padding: 6px 9px;
+  border: 1px solid #8c7855; border-radius: 7px;
+  background: #303346; color: var(--mg-gold-pale); font-size: 10px; font-weight: 700;
+}
+body.mobileGameUX.teamBuilderMode #savedTeamCards .mg-save-row {
+  display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 52px;
+  padding: 5px 7px; border: 1px solid #35455e; border-radius: 7px; background: #1a2940;
+}
+body.mobileGameUX.teamBuilderMode .mg-save-row :is(.mg-save-label,.mg-save-name) { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--mg-ink); font: 600 11px "Cinzel",serif; }
+body.mobileGameUX.teamBuilderMode .mg-save-row :is(.mg-save-thumbs,.mg-save-portraits) { display: flex; flex: none; gap: 2px; }
+body.mobileGameUX.teamBuilderMode .mg-save-row :is(.mg-save-thumbs,.mg-save-portraits) img { width: 29px; height: 34px; object-fit: cover; border: 1px solid #68778e; border-radius: 4px; }
+body.mobileGameUX.teamBuilderMode .mg-save-row :is(.mg-save-actions,.savedTeamBtns) { display: flex; gap: 4px; flex: none; }
+body.mobileGameUX.teamBuilderMode .mg-save-row button { min-width: 44px; min-height: 44px; padding: 5px; border: 1px solid #5e6d82; border-radius: 6px; background: #283850; color: var(--mg-gold-pale); font-size: 10px; }
+body.mobileGameUX.teamBuilderMode .mg-save-empty { padding: 14px; border: 1px dashed #52637c; border-radius: 7px; color: var(--mg-muted); font-size: 11px; text-align: center; }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mg-save-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .mg-save-actions button,
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .stSaveRow button { min-height: 44px; border: 1px solid #8c7855; border-radius: 7px; background: #303346; color: var(--mg-gold-pale); }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .stSaveRow input { min-height: 44px; color: var(--mg-ink); border-color: #52617a; background: #0d1829; }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .savedTeamCard { background: #1a2940; border-color: #3e4e65; }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel .savedTeamBtns button { min-height: 44px; }
+body.mobileGameUX.teamBuilderMode #savedTeamsPanel button { min-height: 44px; }
+
+/* Sheets. Their contents scroll, never the page under a gesture interceptor. */
+body.mobileGameUX .mg-overlay[hidden],
+body.mobileGameUX #mgSlotDialog[hidden] { display: none !important; }
+body.mobileGameUX .mg-overlay:not([hidden]) {
+  position: fixed; inset: 0; z-index: 110; display: flex; justify-content: center; align-items: end;
+  padding: 12px 10px max(10px, env(safe-area-inset-bottom));
+  background: #030813c9;
+}
+body.mobileGameUX .mg-sheet {
+  display: flex; flex-direction: column; width: min(100%, 560px);
+  max-height: min(90vh,780px); max-height: min(90dvh,780px);
+  min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  border: 1px solid #77849a; border-radius: 15px 15px 11px 11px;
+  background: radial-gradient(ellipse at 50% 0%,#283a57,#142137 40%,#0d1829 100%);
+  color: var(--mg-ink); box-shadow: 0 24px 70px #000b; -webkit-overflow-scrolling: touch;
+}
+body.mobileGameUX .mg-sheet-head {
+  position: sticky; top: 0; z-index: 4; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  min-height: 54px; padding: 10px 14px; border-bottom: 1px solid #4c5e77;
+  background: #182740; color: var(--mg-ink); font: 600 16px "Cinzel",serif;
+}
+body.mobileGameUX .mg-sheet-head :is(h2,h3) { margin: 0; color: inherit; font: inherit; }
+body.mobileGameUX .mg-sheet-head button { flex: none; display: grid; place-items: center; min-width: 38px; min-height: 38px; padding: 5px; border: 1px solid #687993; border-radius: 7px; background: #263850; color: var(--mg-ink); }
+body.mobileGameUX .mg-sheet-body { padding: 12px 13px; }
+body.mobileGameUX .mg-sheet-footer {
+  position: sticky; bottom: 0; z-index: 4; display: flex; gap: 8px;
+  padding: 10px 13px max(10px, env(safe-area-inset-bottom));
+  border-top: 1px solid #4c5e77; background: #132138;
+}
+body.mobileGameUX .mg-sheet-footer button { flex: 1; min-height: 46px; padding: 8px 12px; border: 1px solid #776c61; border-radius: 8px; background: #263650; color: var(--mg-ink); font-weight: 800; }
+body.mobileGameUX .mg-sheet-footer :is(.mg-primary,.mg-save-hero) { flex: 2; border-color: #ebcd8d; background: linear-gradient(100deg,#e9ca88,#bd9658); color: #182234; }
+body.mobileGameUX .mg-sheet-footer :is(.mg-remove-slot,.mg-danger) { color: #e6b3a9; border-color: #856462; background: #322b39; }
+body.mobileGameUX .mg-match-choices { display: grid; grid-template-columns: 1fr; gap: 9px; padding: 13px; }
+body.mobileGameUX .mg-match-option {
+  position: relative; display: flex; flex-direction: column; align-items: start; justify-content: center;
+  min-height: 83px; width: 100%; padding: 13px 16px 13px 19px; text-align: left;
+  border: 1px solid #566985; border-radius: 10px; background: linear-gradient(110deg,#253854,#17263e);
+  color: var(--mg-ink);
+}
+body.mobileGameUX .mg-match-option::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 7px; width: 3px; border-radius: 2px; background: #9ab8c2; }
+body.mobileGameUX .mg-match-option[data-kind="tournament"] { border-color: #9a8059; background: linear-gradient(110deg,#3b3540,#20283b); }
+body.mobileGameUX .mg-match-option[data-kind="tournament"]::before { background: var(--mg-gold); }
+body.mobileGameUX .mg-match-option[data-kind="arena"] { border-color: #6c8497; background: linear-gradient(110deg,#233c4b,#172b3b); }
+body.mobileGameUX .mg-match-option[data-kind="arena"]::before { background: #8dc6cb; }
+body.mobileGameUX .mg-match-option strong { color: var(--mg-ink); font: 600 16px "Cinzel",serif; }
+body.mobileGameUX .mg-match-option small { display: block; margin-top: 4px; color: #b9c5d1; font: 400 11px/1.35 "DM Sans",sans-serif; }
+body.mobileGameUX .mg-match-option:is([aria-pressed="true"],.selected) { outline: 2px solid var(--mg-gold); outline-offset: -3px; }
+
+/* Slot editor: portrait-first hero choice, then a terse equipment command. */
+body.mobileGameUX #mgSlotDialog .mg-slot-tabs { position: sticky; top: 54px; z-index: 3; display: flex; gap: 5px; padding: 7px 12px; border-bottom: 1px solid #3d506a; background: #142137; }
+body.mobileGameUX #mgSlotDialog .mg-slot-tabs button { flex: 1; min-height: 40px; border: 1px solid #485c76; border-radius: 7px; background: #21314a; color: var(--mg-muted); font-weight: 700; }
+body.mobileGameUX #mgSlotDialog .mg-slot-tabs button:is(.active,[aria-selected="true"],[aria-pressed="true"]) { border-color: #caaa71; background: #393747; color: var(--mg-gold-pale); }
+/* Keep the slot controls in the viewport and scroll their contents independently.
+   A definite flex height plus min-height:0 gives iOS WebKit a real scrollport. */
+body.mobileGameUX #mgSlotDialog .mg-sheet {
+  height: min(90vh,780px); height: min(90dvh,780px);
+  max-height: min(90vh,780px); max-height: min(90dvh,780px);
+  overflow: hidden;
+}
+body.mobileGameUX #mgSlotContent {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch; touch-action: pan-y;
+}
+body.mobileGameUX #mgSlotDialog .mg-hero-picker { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 7px; padding: 12px; }
+body.mobileGameUX #mgSlotDialog .mg-hero-option {
+  position: relative; display: flex; flex-direction: column; align-items: stretch; min-width: 0; overflow: hidden;
+  padding: 0; border: 1px solid #536680; border-radius: 8px; background: #19283f; color: var(--mg-ink); text-align: center;
+}
+body.mobileGameUX #mgSlotDialog .mg-hero-option img { width: 100%; height: clamp(76px,23vw,125px); display: block; object-fit: cover; object-position: center 25%; }
+body.mobileGameUX #mgSlotDialog .mg-hero-option :is(.mg-hero-name,.mg-hero-option-name,span) { display: block; padding: 6px 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 10px "Cinzel",serif; }
+body.mobileGameUX #mgSlotDialog .mg-hero-option:is([aria-pressed="true"],.selected) { border: 2px solid var(--mg-gold); background: #393544; }
+body.mobileGameUX #mgSlotDialog .mg-hero-option:is(.locked,[aria-disabled="true"],:disabled) { filter: saturate(.45); opacity: .58; }
+body.mobileGameUX #mgSlotDialog .mg-hero-option:is(.locked,[aria-disabled="true"])::after { content: "LOCKED"; position: absolute; top: 5px; right: 5px; padding: 3px 4px; background: #0b1422e8; color: var(--mg-muted); font: 700 8px "Space Mono",monospace; }
+body.mobileGameUX #mgSlotDialog .mg-build-summary { display: flex; align-items: center; gap: 11px; margin: 10px 12px; padding: 8px; border: 1px solid #66738b; border-radius: 9px; background: #223149; }
+body.mobileGameUX #mgSlotDialog .mg-build-summary img { flex: none; width: 51px; height: 57px; object-fit: cover; border: 1px solid #c4a76d; border-radius: 6px; }
+body.mobileGameUX #mgSlotDialog .mg-build-summary :is(strong,.mg-build-name) { color: var(--mg-ink); font: 600 16px "Cinzel",serif; }
+body.mobileGameUX #mgSlotDialog .mg-build-summary small { display: block; color: var(--mg-muted); font-size: 10px; }
+body.mobileGameUX #mgSlotDialog .mg-build-section { margin: 0 12px 10px; padding: 10px; border: 1px solid #3f526d; border-radius: 9px; background: #132137; }
+body.mobileGameUX #mgSlotDialog .mg-build-section > :is(h3,h4,header) { margin: 0 0 8px; color: var(--mg-gold-pale); font: 600 12px "Cinzel",serif; }
+body.mobileGameUX #mgSlotDialog :is(.mg-build-choices,.mg-talent-choices,.mg-racial-choices) { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; }
+body.mobileGameUX #mgSlotDialog .mg-build-choice,
+body.mobileGameUX #mgSlotDialog :is(.mg-talent-choices,.mg-racial-choices) button {
+  display: flex; flex-direction: row; justify-content: start; align-items: start; gap: 7px; min-width: 0; min-height: 51px;
+  padding: 8px 9px; border: 1px solid #536782; border-radius: 7px; background: #20314b; color: var(--mg-ink); text-align: left;
+}
+body.mobileGameUX #mgSlotDialog .mg-choice-art { flex: none; display: block; width: 32px; height: 32px; overflow: hidden; border: 1px solid #687993; border-radius: 5px; }
+body.mobileGameUX #mgSlotDialog .mg-choice-art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+body.mobileGameUX #mgSlotDialog .mg-choice-copy { flex: 1; min-width: 0; }
+body.mobileGameUX #mgSlotDialog .mg-fixed-spell { display: flex; align-items: center; gap: 7px; }
+body.mobileGameUX #mgSlotDialog .mg-racial-choices button { flex-direction: column; gap: 0; }
+body.mobileGameUX #mgSlotDialog :is(.mg-captain-bonus,.mg-racial-details) { grid-column: 1 / -1; padding: 9px; border: 1px solid #8b7655; border-radius: 7px; background: #262c3e; font-size: 11px; line-height: 1.4; }
+body.mobileGameUX #mgSlotDialog :is(.mg-captain-bonus,.mg-racial-details) strong { color: var(--mg-gold-pale); }
+body.mobileGameUX #mgSlotDialog :is(.mg-captain-bonus,.mg-racial-details) p { margin: 5px 0; }
+body.mobileGameUX #mgSlotDialog .mg-build-choice :is(strong,.mg-choice-title),
+body.mobileGameUX #mgSlotDialog :is(.mg-talent-choices,.mg-racial-choices) button strong { font-size: 11px; line-height: 1.2; }
+body.mobileGameUX #mgSlotDialog .mg-build-choice small,
+body.mobileGameUX #mgSlotDialog :is(.mg-talent-choices,.mg-racial-choices) button small { display: block; margin-top: 3px; color: var(--mg-muted); font-size: 9px; line-height: 1.3; }
+body.mobileGameUX #mgSlotDialog :is(.mg-build-choice,.mg-talent-choices button,.mg-racial-choices button):is(.selected,[aria-pressed="true"]) { border-color: #d6b574; background: #393748; color: var(--mg-gold-pale); }
+body.mobileGameUX #mgSlotDialog :is(.mg-build-choice,.mg-talent-choices button,.mg-racial-choices button):is(.locked,[aria-disabled="true"],:disabled) { opacity: .5; filter: saturate(.6); }
+body.mobileGameUX #mgSlotDialog .mg-captain-choice { display: flex; align-items: center; gap: 9px; min-height: 48px; margin: 0 12px 10px; padding: 8px 10px; border: 1px solid #8b7655; border-radius: 8px; background: #2e3041; color: var(--mg-gold-pale); font-size: 11px; font-weight: 700; }
+body.mobileGameUX #mgSlotDialog .mg-captain-choice input { width: 19px; height: 19px; accent-color: #d8b675; }
+body.mobileGameUX #mgSlotError { display: block; margin: 0 13px 8px; color: #f0afa0; font-size: 11px; line-height: 1.35; }
+body.mobileGameUX #mgSlotError:empty { display: none; }
+
+@media (min-width: 700px) {
+  body.mobileGameUX .mg-overlay:not([hidden]) { align-items: center; }
+  body.mobileGameUX .mg-sheet { border-radius: 15px; }
+}
+@media (max-width: 370px) {
+  body.mobileGameUX:not(.battleMode) #app { padding-inline: 6px !important; }
+  body.mobileGameUX #mainHub .ar-record { font-size: 7px; }
+  body.mobileGameUX #mainHub .ar-team-meta { gap: 7px; }
+  body.mobileGameUX.teamBuilderMode #teamSlots { gap: 4px !important; }
+  body.mobileGameUX.teamBuilderMode #teamSlots .mg-slot { min-height: 68px !important; }
+  body.mobileGameUX.teamBuilderMode .mg-save-row :is(.mg-save-thumbs,.mg-save-portraits) img { width: 23px; height: 29px; }
+}

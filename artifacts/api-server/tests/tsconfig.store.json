@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "..",
+    "tsBuildInfoFile": "../.store-tests.tsbuildinfo"
+  },
+  "include": ["storePreview.integration.ts", "storeLive.integration.ts"],
+  "references": [
+    { "path": "../../../lib/db" },
+    { "path": "../../../lib/api-zod" }
+  ]
+}

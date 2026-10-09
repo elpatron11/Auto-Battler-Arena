@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roster visual comparison — preview only</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1220;color:#dce8f1;font:14px/1.45 system-ui,sans-serif}main{max-width:960px;margin:auto;padding:20px}h1{font-size:24px;color:#f1d397;margin:0 0 8px}p{color:#9fb4c5;margin:6px 0 12px}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}select,button,a{font:inherit;color:#dce8f1;background:#1b2c42;border:1px solid #536b86;border-radius:7px;padding:8px 11px}button{cursor:pointer}label{display:flex;gap:8px;align-items:center}#status{font-size:12px;color:#bde4c9;white-space:pre-wrap}#comparison{display:block;width:100%;height:auto;border:1px solid #415972;border-radius:12px;background:#101c2c}#engine{position:fixed;width:100px;height:100px;left:-1000px;border:0;visibility:hidden}.note{font-size:12px}
+</style></head><body><main>
+<h1>Whole-roster visual test</h1>
+<p>Original and polished art from the same game renderer, at the same scale. No fights, rewards or account changes. This is a preview-only comparison.</p>
+<div class="controls"><label>Animation <select id="pose"><option value="idle">Idle</option><option value="run">Run & turn</option><option value="attack">Attack</option><option value="cast">Cast</option><option value="hit">Hit reaction</option><option value="stun">Stun</option><option value="root">Root</option><option value="death">Death</option></select></label><label>Skin <select id="skin"><option value="default">Default</option><option value="first">First alternate</option><option value="second">Second alternate</option></select></label><button id="benchmark" disabled>Measure render cost</button><a href="./try">Try a practice fight</a></div>
+<p class="note">Benchmarks measure browser rendering, not iPhone battery, thermal throttling or native Safari performance. Check a real iPhone before release.</p>
+<div id="status" role="status">Loading the original game renderer…</div>
+<canvas id="comparison" width="920" height="1404" aria-label="All nine classes, original on left and polished on right"></canvas>
+</main><iframe id="engine" src="./game.html?guest=1&amp;visualPreview=1" title="Read-only comparison renderer"></iframe>
+<script src="./roster-visual-lab.js"></script></body></html>

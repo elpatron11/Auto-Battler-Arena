@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 320" role="img" aria-label="Brutal Strikes collectible art">
+<defs><radialGradient id="g"><stop stop-color="#ff6b4a" stop-opacity=".92"/><stop offset="1" stop-color="#69251c"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="256" height="320" rx="22" fill="#08111f"/><rect x="8" y="8" width="240" height="304" rx="18" fill="url(#g)" stroke="#ff6b4a" stroke-width="3"/>
+<circle cx="128" cy="132" r="82" fill="#07101d" opacity=".55" stroke="#ff6b4a" stroke-opacity=".55"/>
+<polygon points="217,174 102,59 88,184 86,138 184,113 73,50 182,30" fill="none" stroke="#ff6b4a" stroke-width="9" stroke-linejoin="round" filter="url(#glow)" opacity=".9"/>
+<circle cx="128" cy="132" r="24" fill="#ff6b4a" opacity=".82" filter="url(#glow)"/><circle cx="128" cy="132" r="9" fill="#fff" opacity=".9"/>
+<rect x="18" y="228" width="220" height="70" rx="12" fill="#050b14" opacity=".88"/>
+<text x="128" y="250" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#ff6b4a" letter-spacing="2">TALENT</text>
+<text x="128" y="276" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="800" fill="#fff">Brutal Strikes</text>
+</svg>

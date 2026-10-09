@@ -1,0 +1,991 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: arena
+    description: Authenticated asynchronous arena operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /arena/profile:
+    get:
+      operationId: getArenaProfile
+      tags: [arena]
+      summary: Load or create the signed-in player's game profile
+      responses:
+        "200":
+          description: Profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaProfile"
+    put:
+      operationId: saveArenaProfile
+      tags: [arena]
+      summary: Save the signed-in player's local game progression and preferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArenaProfileInput"
+      responses:
+        "200":
+          description: Saved profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaProfile"
+  /arena/defense:
+    put:
+      operationId: publishArenaDefense
+      tags: [arena]
+      summary: Publish a three-hero defense for offline challenges
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArenaDefenseInput"
+      responses:
+        "200":
+          description: Defense published
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaDefenseStatus"
+  /arena/players:
+    get:
+      operationId: listArenaPlayers
+      tags: [arena]
+      summary: Discover players with published defenses, without revealing their lineups
+      responses:
+        "200":
+          description: Players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ArenaPlayer"
+  /arena/profiles:
+    get:
+      operationId: searchArenaProfiles
+      tags: [arena]
+      summary: Search signed-in players' public Arena profiles
+      parameters:
+        - in: query
+          name: search
+          required: false
+          schema: { type: string, maxLength: 64 }
+      responses:
+        "200":
+          description: Matching player profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ArenaProfileCard" }
+  /arena/profiles/{playerId}:
+    get:
+      operationId: getArenaPublicProfile
+      tags: [arena]
+      summary: View a player's Arena profile and featured replays
+      parameters:
+        - in: path
+          name: playerId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Public profile, with private recent matches when viewing your own profile
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ArenaPublicProfile" }
+  /arena/notifications:
+    get:
+      operationId: listArenaNotifications
+      tags: [arena]
+      summary: Get unread Arena result updates to show when signing back in
+      responses:
+        "200":
+          description: Up to 100 unread results, newest first
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ArenaNotification" }
+  /arena/notifications/read:
+    post:
+      operationId: markArenaNotificationsRead
+      tags: [arena]
+      summary: Dismiss only the notifications the player has seen
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ArenaNotificationsReadInput" }
+      responses:
+        "200":
+          description: Updated count
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ArenaNotificationsReadReceipt" }
+  /arena/leaderboard:
+    get:
+      operationId: getArenaLeaderboard
+      tags: [arena]
+      summary: Rank players with published defenses
+      responses:
+        "200":
+          description: Ranked players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ArenaPlayer"
+  /arena/challenges:
+    get:
+      operationId: listArenaChallenges
+      tags: [arena]
+      summary: Recent outgoing matches and incoming defense battles
+      responses:
+        "200":
+          description: Challenges involving the signed-in player
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ArenaChallenge"
+    post:
+      operationId: createArenaChallenge
+      tags: [arena]
+      summary: Settle a ranked match from frozen teams on the server and reveal the defense
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArenaChallengeInput"
+      responses:
+        "201":
+          description: Created challenge
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaChallengeTicket"
+  /arena/challenges/{challengeId}/result:
+    post:
+      operationId: finishArenaChallenge
+      tags: [arena]
+      summary: Retrieve the server-resolved ranked result and optionally save local fight statistics
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArenaResultInput"
+      responses:
+        "200":
+          description: Result and rating change
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaResultReceipt"
+  /economy:
+    get:
+      operationId: getEconomy
+      tags: [arena]
+      summary: Read the signed-in player's authoritative wallet, unlocks, and tradable copies
+      responses:
+        "200":
+          description: Economy ledger
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EconomyAccount" }
+  /economy/local-matches:
+    post:
+      operationId: startEconomyLocalMatch
+      tags: [arena]
+      summary: Register a local AI match before play begins
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LocalMatchStartInput" }
+      responses:
+        "201":
+          description: Local match ticket
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LocalMatchTicket" }
+  /economy/local-matches/{matchId}/finish:
+    post:
+      operationId: finishEconomyLocalMatch
+      tags: [arena]
+      summary: Award local AI win Gold once for a registered match
+      parameters:
+        - in: path
+          name: matchId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LocalMatchFinishInput" }
+      responses:
+        "200":
+          description: Gold credited for this local match
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/LocalMatchReceipt" }
+  /economy/bootstrap:
+    post:
+      operationId: bootstrapEconomy
+      tags: [arena]
+      summary: Initialize a new account once with three client-selected free classes and a selected racial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EconomyBootstrapInput" }
+      responses:
+        "201":
+          description: New economy account initialized
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EconomyBootstrapReceipt" }
+        "409": { description: Account already initialized }
+  /economy/tournaments/enter:
+    post:
+      operationId: enterEconomyTournament
+      tags: [arena]
+      summary: Pay the entry fee and resolve a bounded server-simulated six-team tournament
+      description: Five server-selected canonical Arena bots join the player in a bracket. Each best-of-three is a deterministic 2-0 representation of one server-resolved ranked battle; ties advance the first seeded team. This is not verification of a played client tournament or player performance. Accounts may enter at most three tournaments in a rolling 24-hour window, and prizes cannot be claimed until 90 seconds after entry.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/TournamentEnterInput" }
+      responses:
+        "201":
+          description: Tournament entry created; placement and bracket are server-computed
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TournamentRun" }
+        "200":
+          description: Idempotent replay of the original entry
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TournamentRun" }
+        "400": { description: Invalid request or attack snapshot }
+        "403": { description: Attack snapshot includes unowned loadout items }
+        "409": { description: Insufficient Gold or requestId is already owned by another player }
+        "429": { description: Three tournament entries have already been created during the rolling 24-hour window }
+  /economy/tournaments:
+    get:
+      operationId: listEconomyTournaments
+      tags: [arena]
+      summary: List the signed-in player's authoritative tournament history
+      responses:
+        "200":
+          description: Tournament runs ordered by entry time
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/TournamentRun" }
+  /economy/tournaments/{tournamentId}/finish:
+    post:
+      operationId: finishEconomyTournament
+      tags: [arena]
+      summary: Claim the stored server-computed tournament prize exactly once, no sooner than 90 seconds after entry
+      parameters:
+        - in: path
+          name: tournamentId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Authoritative placement, prize, wallet balance, and bracket history
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/TournamentRun" }
+        "404": { description: Tournament run not found for this player }
+        "409": { description: Minimum tournament duration has not elapsed or the wallet cannot accept the prize }
+  /market/listings:
+    get:
+      operationId: listMarketListings
+      tags: [arena]
+      summary: Browse active player-market listings
+      responses:
+        "200":
+          description: Active listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/MarketListing" }
+    post:
+      operationId: createMarketListing
+      tags: [arena]
+      summary: List one owned duplicate copy for Gold
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/MarketListingInput" }
+      responses:
+        "201":
+          description: Listing created
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MarketListing" }
+  /market/listings/{listingId}:
+    delete:
+      operationId: cancelMarketListing
+      tags: [arena]
+      summary: Cancel the signed-in seller's listing
+      parameters:
+        - in: path
+          name: listingId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200": { description: Listing cancelled }
+  /market/listings/{listingId}/purchase:
+    post:
+      operationId: purchaseMarketListing
+      tags: [arena]
+      summary: Purchase a listing with server-held Gold and apply 10 percent tax
+      parameters:
+        - in: path
+          name: listingId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Purchase receipt
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MarketPurchaseReceipt" }
+  /economy/unlock/class:
+    post:
+      operationId: unlockClass
+      tags: [arena]
+      summary: Unlock a class at the account's current escalating class price
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ClassUnlockInput" }
+      responses:
+        "200": { description: Class unlocked }
+  /economy/unlock/racial:
+    post:
+      operationId: unlockRacial
+      tags: [arena]
+      summary: Unlock a racial at the account's current escalating racial price
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/RacialUnlockInput" }
+      responses:
+        "200": { description: Racial unlocked }
+  /arena/challenges/{challengeId}:
+    get:
+      operationId: getArenaChallenge
+      tags: [arena]
+      summary: Full team compositions and recorded stats for a participant
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Match detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaChallengeDetail"
+  /arena/challenges/{challengeId}/feature:
+    post:
+      operationId: featureArenaMatch
+      tags: [arena]
+      summary: Save a completed recording on your profile (up to five)
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Saved
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ArenaFeatureReceipt" }
+    delete:
+      operationId: unfeatureArenaMatch
+      tags: [arena]
+      summary: Remove a saved recording from your profile
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Removed
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ArenaFeatureReceipt" }
+  /arena/challenges/{challengeId}/recording-upload:
+    post:
+      operationId: requestArenaRecordingUpload
+      tags: [arena]
+      summary: Reserve a private upload for a completed match recording
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArenaRecordingRequest"
+      responses:
+        "200":
+          description: Temporary direct-upload URL
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaRecordingUpload"
+  /arena/challenges/{challengeId}/recording:
+    post:
+      operationId: finishArenaRecording
+      tags: [arena]
+      summary: Attach an uploaded video or snapshot replay to the participant's match
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ArenaRecordingInput"
+      responses:
+        "200":
+          description: Recording available to match participants
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArenaRecordingStatus"
+    get:
+      operationId: getArenaRecording
+      tags: [arena]
+      summary: Stream a match recording to an authenticated participant
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        "200":
+          description: Participant-only video recording or snapshot replay (video supports byte ranges)
+          content:
+            video/webm: {}
+            video/mp4: {}
+            application/vnd.arena.replay+json: {}
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    ArenaProfile:
+      type: object
+      required: [playerId, name, rating, wins, losses, state, defensePublished]
+      properties:
+        playerId: { type: string }
+        name: { type: string }
+        rating: { type: integer }
+        wins: { type: integer }
+        losses: { type: integer }
+        state:
+          type: object
+          additionalProperties: true
+        defensePublished: { type: boolean }
+        defenseUpdatedAt: { type: ["string", "null"], format: date-time }
+    ArenaProfileInput:
+      type: object
+      required: [name, state]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 32 }
+        state:
+          type: object
+          additionalProperties: true
+    ArenaDefenseInput:
+      type: object
+      required: [defense]
+      properties:
+        defense:
+          type: object
+          additionalProperties: true
+    ArenaDefenseStatus:
+      type: object
+      required: [publishedAt]
+      properties:
+        publishedAt: { type: string, format: date-time }
+    ArenaPlayer:
+      type: object
+      required: [playerId, name, rating, wins, losses, publishedAt, isBot]
+      properties:
+        playerId: { type: string }
+        name: { type: string }
+        isBot: { type: boolean }
+        rating: { type: integer }
+        wins: { type: integer }
+        losses: { type: integer }
+        publishedAt: { type: string, format: date-time }
+    ArenaProfileCard:
+      type: object
+      required: [playerId, name, rating, wins, losses, defensePublished]
+      properties:
+        playerId: { type: string }
+        name: { type: string }
+        rating: { type: integer }
+        wins: { type: integer }
+        losses: { type: integer }
+        defensePublished: { type: boolean }
+    ArenaFeaturedMatch:
+      type: object
+      required: [id, opponentId, opponentName, outcome, ratingDelta, createdAt, recordingContentType, featured]
+      properties:
+        id: { type: string, format: uuid }
+        opponentId: { type: string }
+        opponentName: { type: string }
+        outcome: { type: string, enum: [win, loss, draw] }
+        ratingDelta: { type: integer }
+        createdAt: { type: string, format: date-time }
+        recordingContentType: { type: string }
+        featured: { type: boolean }
+    ArenaPublicProfile:
+      allOf:
+        - $ref: "#/components/schemas/ArenaProfileCard"
+        - type: object
+          required: [isOwnProfile, featuredMatches, recentMatches]
+          properties:
+            isOwnProfile: { type: boolean }
+            featuredMatches:
+              type: array
+              items: { $ref: "#/components/schemas/ArenaFeaturedMatch" }
+            recentMatches:
+              type: array
+              description: Only included for the owner; never expose unfeatured replays to other players.
+              items: { $ref: "#/components/schemas/ArenaFeaturedMatch" }
+    ArenaFeatureReceipt:
+      type: object
+      required: [featured]
+      properties:
+        featured: { type: boolean }
+    ArenaNotification:
+      type: object
+      required: [id, challengeId, opponentId, opponentName, direction, outcome, ratingDelta, economy, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        challengeId: { type: string, format: uuid }
+        opponentId: { type: string }
+        opponentName: { type: string }
+        direction: { type: string, enum: [incoming, outgoing] }
+        outcome: { type: string, enum: [win, loss, draw] }
+        ratingDelta: { type: integer }
+        economy: { $ref: "#/components/schemas/ArenaEconomyReceipt" }
+        createdAt: { type: string, format: date-time }
+    ArenaNotificationsReadInput:
+      type: object
+      required: [ids]
+      properties:
+        ids:
+          type: array
+          minItems: 1
+          maxItems: 100
+          uniqueItems: true
+          items: { type: string, format: uuid }
+    ArenaNotificationsReadReceipt:
+      type: object
+      required: [markedCount]
+      properties:
+        markedCount: { type: integer }
+    ArenaChallengeInput:
+      type: object
+      required: [requestId, attack]
+      properties:
+        requestId: { type: string, format: uuid }
+        opponentId: { type: string, description: "Omit to match with a random eligible opponent." }
+        attack:
+          type: object
+          additionalProperties: true
+    ArenaChallengeTicket:
+      type: object
+      required: [id, opponentId, opponentName, opponentRating, defense, createdAt]
+      properties:
+        id: { type: string }
+        opponentId: { type: string }
+        opponentName: { type: string }
+        opponentRating: { type: integer }
+        defense:
+          type: object
+          additionalProperties: true
+        createdAt: { type: string, format: date-time }
+    ArenaChallenge:
+      type: object
+      required: [id, direction, opponentName, outcome, localOutcome, ratingDelta, createdAt, hasSummary, hasRecording]
+      properties:
+        id: { type: string }
+        direction: { type: string, enum: [outgoing, incoming] }
+        opponentName: { type: string }
+        outcome: { type: ["string", "null"], enum: [win, loss, draw, null] }
+        localOutcome: { type: ["string", "null"], enum: [win, loss, draw, null] }
+        ratingDelta: { type: integer }
+        createdAt: { type: string, format: date-time }
+        resolvedAt: { type: ["string", "null"], format: date-time }
+        hasSummary: { type: boolean }
+        hasRecording: { type: boolean }
+    ArenaHeroStats:
+      type: object
+      required: [classId, name, damage, healing, kills, deaths, assists, cc, prevented, reflected, aoe, dot, pet, selfHeal, shielding, survival]
+      properties:
+        classId: { type: string }
+        name: { type: string }
+        damage: { type: number }
+        healing: { type: number }
+        kills: { type: integer }
+        deaths: { type: integer }
+        assists: { type: integer }
+        cc: { type: number }
+        prevented: { type: number }
+        reflected: { type: number }
+        aoe: { type: number }
+        dot: { type: number }
+        pet: { type: number }
+        selfHeal: { type: number }
+        shielding: { type: number }
+        survival: { type: number }
+    ArenaMatchSummary:
+      type: object
+      required: [durationSeconds, player, enemy]
+      properties:
+        durationSeconds: { type: number }
+        player:
+          type: array
+          items: { $ref: "#/components/schemas/ArenaHeroStats" }
+        enemy:
+          type: array
+          items: { $ref: "#/components/schemas/ArenaHeroStats" }
+    ArenaChallengeDetail:
+      type: object
+      required: [id, direction, opponentName, outcome, localOutcome, ratingDelta, createdAt, attack, defense, summary, hasRecording]
+      properties:
+        id: { type: string }
+        direction: { type: string, enum: [outgoing, incoming] }
+        opponentName: { type: string }
+        outcome: { type: ["string", "null"], enum: [win, loss, draw, null] }
+        localOutcome: { type: ["string", "null"], enum: [win, loss, draw, null] }
+        ratingDelta: { type: integer }
+        createdAt: { type: string, format: date-time }
+        resolvedAt: { type: ["string", "null"], format: date-time }
+        attack:
+          type: object
+          additionalProperties: true
+        defense:
+          type: object
+          additionalProperties: true
+        summary:
+          oneOf:
+            - $ref: "#/components/schemas/ArenaMatchSummary"
+            - type: "null"
+        hasRecording: { type: boolean }
+        recordingContentType: { type: ["string", "null"], enum: [video/webm, video/mp4, application/vnd.arena.replay+json, null] }
+    ArenaResultInput:
+      type: object
+      properties:
+        localOutcome: { type: string, enum: [win, loss, draw], description: "Browser-reported fight result. Required to settle new challenges; determines ranked rating and rewards. Existing settled challenges remain unchanged." }
+        summary:
+          $ref: "#/components/schemas/ArenaMatchSummary"
+    ArenaResultReceipt:
+      type: object
+      required: [rating, delta, wins, losses, outcome, localOutcome, opponentName, economy]
+      properties:
+        rating: { type: integer }
+        delta: { type: integer }
+        wins: { type: integer }
+        losses: { type: integer }
+        outcome: { type: string, enum: [win, loss, draw] }
+        localOutcome: { type: ["string", "null"], enum: [win, loss, draw, null] }
+        opponentName: { type: string }
+        economy: { $ref: "#/components/schemas/ArenaEconomyReceipt" }
+    ArenaEconomyReceipt:
+      type: object
+      required: [gold, drops, losses]
+      properties:
+        gold: { type: integer }
+        drops:
+          type: array
+          items:
+            type: object
+            required: [kind, itemId, duplicate]
+            properties:
+              kind: { type: string, enum: [spell, talent, ultimate] }
+              itemId: { type: string }
+              duplicate: { type: boolean }
+        losses:
+          type: array
+          items:
+            type: object
+            required: [kind, itemId, listingCancelled]
+            properties:
+              kind: { type: string, enum: [spell, ultimate] }
+              itemId: { type: string }
+              listingCancelled: { type: boolean }
+    EconomyAccount:
+      type: object
+      required: [onboardingRequired, gold, unlocks, duplicates, listings, config]
+      properties:
+        onboardingRequired: { type: boolean }
+        gold: { type: integer }
+        unlocks:
+          type: array
+          items:
+            type: object
+            required: [kind, itemId]
+            properties:
+              kind: { type: string }
+              itemId: { type: string }
+        duplicates:
+          type: array
+          items:
+            type: object
+            required: [kind, itemId, quantity]
+            properties:
+              kind: { type: string, enum: [spell, talent, ultimate] }
+              itemId: { type: string }
+              quantity: { type: integer, minimum: 0 }
+        listings:
+          type: array
+          items: { $ref: "#/components/schemas/MarketListing" }
+        config:
+          type: object
+          additionalProperties: true
+    LocalMatchStartInput:
+      type: object
+      required: [requestId]
+      properties:
+        requestId: { type: string, format: uuid }
+    LocalMatchTicket:
+      type: object
+      required: [id, startedAt]
+      properties:
+        id: { type: string, format: uuid }
+        startedAt: { type: string, format: date-time }
+    LocalMatchFinishInput:
+      type: object
+      required: [outcome]
+      properties:
+        outcome: { type: string, enum: [win, loss, draw], description: "Browser-reported result of a local AI fight. This is not independently verified by the server." }
+    LocalMatchReceipt:
+      type: object
+      required: [id, outcome, gold, balance, localWins]
+      properties:
+        id: { type: string, format: uuid }
+        outcome: { type: string, enum: [win, loss, draw] }
+        gold: { type: integer, minimum: 0 }
+        balance: { type: integer, minimum: 0 }
+        localWins: { type: integer, minimum: 0 }
+    EconomyBootstrapInput:
+      type: object
+      required: [classIds, racialId]
+      properties:
+        classIds:
+          type: array
+          minItems: 3
+          maxItems: 3
+          uniqueItems: true
+          items:
+            type: string
+            enum: [frostmage, priest, warrior, rogue, paladin, archer, warlock, druid, shaman]
+        racialId: { type: string, enum: [nightelf, tauren, orc, troll, dwarf, bloodelf, goblin, undead] }
+    EconomyBootstrapReceipt:
+      type: object
+      required: [bootstrapped, repeatedRequest, gold, unlocks]
+      properties:
+        bootstrapped: { type: boolean }
+        repeatedRequest: { type: boolean }
+        gold: { type: integer, const: 0 }
+        unlocks:
+          type: array
+          items:
+            type: object
+            required: [kind, itemId]
+            properties:
+              kind: { type: string }
+              itemId: { type: string }
+    TournamentEnterInput:
+      type: object
+      required: [requestId, attack]
+      properties:
+        requestId: { type: string, format: uuid }
+        attack:
+          $ref: "#/components/schemas/RankedTeamSnapshot"
+    RankedTeamSnapshot:
+      type: object
+      required: [heroes, captainClass, captainRacial]
+      properties:
+        heroes:
+          type: array
+          minItems: 3
+          maxItems: 3
+          items:
+            type: object
+            required: [classId]
+            properties:
+              classId: { type: string, enum: [frostmage, priest, warrior, rogue, paladin, archer, warlock, druid, shaman] }
+              ability: { type: string, enum: [default, custom] }
+              ultimate: { type: string, enum: [default, custom] }
+              talents: { type: array, maxItems: 2, items: { type: string, maxLength: 40 } }
+        captainClass: { type: string, enum: [frostmage, priest, warrior, rogue, paladin, archer, warlock, druid, shaman] }
+        captainRacial: { type: string, enum: [nightelf, tauren, orc, troll, dwarf, bloodelf, goblin, undead] }
+    TournamentRun:
+      type: object
+      required: [id, requestId, state, placement, prize, entryFee, gold, tournamentWins, repeatedRequest, history, createdAt, finishedAt]
+      properties:
+        id: { type: string, format: uuid }
+        requestId: { type: string, format: uuid }
+        state: { type: string, enum: [entered, finished] }
+        placement: { type: string, enum: [champion, runner_up, eliminated] }
+        prize: { type: integer, enum: [0, 50, 500] }
+        entryFee: { type: integer, const: 100 }
+        gold: { type: integer, minimum: 0 }
+        tournamentWins: { type: integer, minimum: 0, description: "Preserved legacy display wins plus championships from server-settled runs; legacy wins never grant Gold." }
+        repeatedRequest: { type: boolean }
+        history:
+          type: array
+          items: { $ref: "#/components/schemas/TournamentBracketMatch" }
+        createdAt: { type: string, format: date-time }
+        finishedAt: { type: ["string", "null"], format: date-time }
+    TournamentBracketMatch:
+      type: object
+      required: [round, playerA, playerB, playerAName, playerBName, playerASnapshot, playerBSnapshot, winner, outcome, scoreA, scoreB]
+      properties:
+        round: { type: string, enum: [round_of_6, semifinal, final] }
+        playerA: { type: string }
+        playerB: { type: string }
+        playerAName: { type: string }
+        playerBName: { type: string }
+        playerASnapshot:
+          type: object
+          additionalProperties: true
+        playerBSnapshot:
+          type: object
+          additionalProperties: true
+        winner: { type: string }
+        outcome: { type: string, enum: [win, loss, draw] }
+        scoreA: { type: integer, enum: [0, 2] }
+        scoreB: { type: integer, enum: [0, 2] }
+    ClassUnlockInput:
+      type: object
+      required: [classId]
+      properties:
+        classId: { type: string, enum: [frostmage, priest, warrior, rogue, paladin, archer, warlock, druid, shaman] }
+    RacialUnlockInput:
+      type: object
+      required: [racialId]
+      properties:
+        racialId: { type: string, enum: [nightelf, tauren, orc, troll, dwarf, bloodelf, goblin, undead] }
+    MarketListing:
+      type: object
+      required: [id, sellerId, kind, itemId, price, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        sellerId: { type: string }
+        kind: { type: string, enum: [spell, talent, ultimate] }
+        itemId: { type: string }
+        price: { type: integer, minimum: 1 }
+        createdAt: { type: string, format: date-time }
+    MarketListingInput:
+      type: object
+      required: [kind, itemId, price]
+      properties:
+        kind: { type: string, enum: [spell, talent, ultimate] }
+        itemId: { type: string }
+        price: { type: integer, minimum: 1 }
+    MarketPurchaseReceipt:
+      type: object
+      required: [purchased, price, tax, sellerAmount]
+      properties:
+        purchased: { type: boolean }
+        price: { type: integer }
+        tax: { type: integer }
+        sellerAmount: { type: integer }
+    ArenaRecordingRequest:
+      type: object
+      required: [contentType, sizeBytes]
+      properties:
+        contentType: { type: string, enum: [video/webm, video/mp4, application/vnd.arena.replay+json] }
+        sizeBytes: { type: integer, minimum: 1, maximum: 40000000 }
+    ArenaRecordingUpload:
+      type: object
+      required: [uploadUrl, objectPath]
+      properties:
+        uploadUrl: { type: string, format: uri }
+        objectPath: { type: string }
+    ArenaRecordingInput:
+      type: object
+      required: [objectPath, contentType]
+      properties:
+        objectPath: { type: string }
+        contentType: { type: string, enum: [video/webm, video/mp4, application/vnd.arena.replay+json] }
+    ArenaRecordingStatus:
+      type: object
+      required: [available, videoUrl]
+      properties:
+        available: { type: boolean }
+        videoUrl: { type: string }
+

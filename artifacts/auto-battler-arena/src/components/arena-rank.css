@@ -1,0 +1,14 @@
+.arb{display:inline-flex;align-items:center;gap:6px;color:var(--rank-color,#ffd166);font-weight:800;font-size:12px;line-height:1;white-space:nowrap;vertical-align:middle}
+.arb-gem{width:18px;height:18px;flex:none}
+.arb-name b{font-weight:900}
+.arb-rating{color:#e8ecf7;opacity:.82;font-weight:700;padding-left:6px;border-left:1px solid rgba(255,255,255,.2)}
+.arb-lg{font-size:16px;gap:8px}.arb-lg .arb-gem{width:28px;height:28px}
+.arb-guide{margin-top:14px;padding:12px;border:1px solid rgba(255,209,102,.3);border-radius:10px;background:rgba(0,0,0,.18)}
+.arb-guide h3{margin:0 0 4px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.arb-guide p{margin:0 0 8px;font-size:12px;opacity:.8;line-height:1.4}
+.arb-guide ol{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.arb-guide li{display:grid;grid-template-columns:minmax(0,1.2fr) auto minmax(0,1.3fr);gap:8px;align-items:baseline;font-size:12px;padding:4px 0;border-top:1px solid rgba(255,255,255,.08)}
+.arb-guide-name{color:var(--rank-color);font-weight:800}
+.arb-guide-range{opacity:.7;font-variant-numeric:tabular-nums}
+.arb-guide-gold{text-align:right;color:#ffd66e}
+@media(max-width:420px){.arb-guide li{grid-template-columns:1fr auto}.arb-guide-gold{grid-column:1/-1;text-align:left}}

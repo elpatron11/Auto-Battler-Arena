@@ -1,0 +1,22 @@
+html.arena-starting,html.arena-starting body{background:#05060c}
+html.arena-starting #root{visibility:hidden!important}
+#arena-startup{position:fixed;inset:0;z-index:2147483000;background:#05060c;overflow:hidden;opacity:1;transition:opacity .5s ease;color:#f0e2bd;font-family:Georgia,'Times New Roman',serif}
+#arena-startup[hidden]{display:none}
+#arena-startup.is-leaving{opacity:0;pointer-events:none}
+#arena-startup .as-layer{position:absolute;inset:0;opacity:0;transition:opacity .6s ease}
+#arena-startup .as-layer.on{opacity:1}
+#arena-startup .as-brand{display:flex;align-items:center;justify-content:center}
+#arena-startup .as-brand img{height:100%;width:auto;max-width:100%;object-fit:contain;display:block}
+#arena-startup .as-load::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(5,6,12,.82),rgba(5,6,12,.82)),url("./startup/loading.webp") center/cover no-repeat}
+#arena-startup .as-box{position:absolute;width:min(100vw,177.78dvh);height:min(100dvh,56.25vw);left:50%;top:50%;transform:translate(-50%,-50%)}
+@media (max-aspect-ratio:1/1){#arena-startup .as-box{width:100vw;height:56.25vw;top:50%;transform:translate(-50%,-50%)}}
+#arena-startup .as-box img{width:100%;height:100%;display:block;object-fit:contain}
+#arena-startup .as-track{position:absolute;left:34.8%;width:30.4%;top:84.6%;height:2.9%;background:#0a1a3c;overflow:hidden;border-radius:2px}
+#arena-startup .as-track i{position:absolute;top:0;bottom:0;left:0;width:30%;background:linear-gradient(90deg,transparent,#58b4ff,transparent);animation:as-slide 1.6s ease-in-out infinite;will-change:transform}
+@keyframes as-slide{from{transform:translateX(-100%)}to{transform:translateX(340%)}}
+#arena-startup .as-fail{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;text-align:center;padding:24px;background:rgba(5,6,12,.78)}
+#arena-startup.is-failed .as-fail{display:flex}
+#arena-startup.is-failed .as-track{display:none}
+#arena-startup .as-fail p{margin:0;font-size:17px;letter-spacing:.04em}
+#arena-startup .as-fail button{font:inherit;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:11px 28px;color:#1a1204;background:linear-gradient(#f3cf7a,#c28a2e);border:1px solid #f7e2a6;border-radius:3px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){#arena-startup,#arena-startup .as-layer{transition:none}#arena-startup .as-track i{animation:none;width:100%;opacity:.55;transform:none}}

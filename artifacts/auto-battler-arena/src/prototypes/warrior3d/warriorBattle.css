@@ -1,0 +1,40 @@
+:root { font-family:system-ui,sans-serif; color:#e8e7ef; background:#0e111c; color-scheme:dark; }
+* { box-sizing:border-box; }
+body { margin:0; }
+.wb-page { max-width:1440px; margin:auto; }
+.wb-header { padding:16px 20px 12px; background:#151727; border-bottom:1px solid #574b30; }
+.wb-header nav { display:flex; flex-wrap:wrap; gap:20px; font-size:13px; }
+.wb-header a { color:#ead29a; text-decoration:none; }
+.wb-heading { display:flex; align-items:center; flex-wrap:wrap; gap:12px; margin-top:12px; }
+.wb-heading h1 { margin:0; font-family:Georgia,serif; font-size:25px; color:#f5e1af; }
+.wb-heading span { border:1px solid #6f504a; padding:3px 8px; border-radius:20px; font-size:11px; color:#e9b5a5; }
+.wb-header p { font-size:13px; line-height:1.45; margin:8px 0; }
+.wb-header small { display:block; max-width:920px; color:#a7abbc; font-size:11px; line-height:1.5; }
+.wb-controls { display:flex; flex-wrap:wrap; gap:8px; }
+.wb-header button { font:inherit; min-height:42px; padding:8px 12px; border:1px solid #5b586d; border-radius:7px; background:#242638; color:#efedf5; cursor:pointer; }
+.wb-header button[aria-pressed=true] { color:#211c13; border-color:#e5c070; background:#d4ac59; }
+.wb-header button:disabled { opacity:.5; cursor:default; }
+.wb-header :is(a,button):focus-visible { outline:2px solid #eed398; outline-offset:3px; }
+.wb-status { color:#ead29a; }
+.wb-error { color:#ffccc4; border:1px solid #834840; padding:8px; border-radius:5px; }
+.wb-game { display:block; width:100%; height:max(850px,calc(100dvh - 250px)); border:0; background:#0e111c; }
+@media(max-width:600px) {
+  .wb-header { padding:12px; }
+  .wb-heading h1 { font-size:21px; }
+  .wb-header p { font-size:12px; }
+  .wb-controls button { font-size:12px; }
+  .wb-game { height:max(1200px,calc(100dvh - 280px)); }
+}
+@media(orientation:landscape) and (max-height:600px) {
+  .wb-header { padding:5px 10px; }
+  .wb-header nav { font-size:10px; }
+  .wb-heading { margin-top:3px; gap:8px; }
+  .wb-heading h1 { font-size:16px; }
+  .wb-heading span { font-size:9px; padding:1px 6px; }
+  .wb-header > p:not(.wb-status):not(.wb-error), .wb-header > small { display:none; }
+  .wb-controls { margin-top:4px; gap:6px; }
+  .wb-controls button { min-height:30px; padding:4px 8px; font-size:11px; }
+  .wb-header .wb-status { font-size:10px; margin:3px 0; }
+  /* Give the embedded game's existing landscape camera a real short viewport. */
+  .wb-game { height:calc(100dvh - 140px); min-height:180px; }
+}

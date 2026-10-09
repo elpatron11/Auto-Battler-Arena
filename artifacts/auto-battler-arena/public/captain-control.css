@@ -1,0 +1,69 @@
+.ccSel{margin:10px auto;max-width:900px;padding:9px 12px;background:#11182a;border:1px solid #293653;border-radius:12px;font-size:12px;color:#9eabc9}
+.ccSel .ccTitle{font-weight:800;color:#e8efff;font-size:13px;margin-bottom:6px}
+.ccSeg{display:inline-flex;gap:6px}
+.ccSeg button{min-height:40px;min-width:92px;padding:6px 14px;border-radius:20px;border:2px solid #262e47;background:#141928;color:#e8ecf7;font-weight:700;font-size:13px;cursor:pointer;touch-action:manipulation}
+.ccSeg button.on{border-color:#ffd166;color:#ffd166;background:#1c2338}
+.ccSeg button:disabled{opacity:.4;cursor:not-allowed}
+.ccNote{margin-top:6px;line-height:1.4}
+#captainReplayNote{font-size:12px;color:#9eabc9;margin:8px 0;max-width:320px}
+/* Manual Captain HUD: fixed bottom overlay, translucent circular MOBA cluster */
+#ccBattle{display:none;box-sizing:border-box;container-type:inline-size;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;pointer-events:none}
+#ccBattle.show{display:block;position:fixed;left:0;right:0;bottom:0;z-index:34;margin:0;padding:0 max(10px,var(--game-safe-right,env(safe-area-inset-right))) max(10px,var(--game-safe-bottom,env(safe-area-inset-bottom))) max(10px,var(--game-safe-left,env(safe-area-inset-left)))}
+#ccBattle .ccMsg{font-size:11px;color:#e8efff;text-shadow:0 1px 2px #05080f;margin:0 0 4px;min-height:14px;text-align:center;pointer-events:none}
+.ccRow{position:relative;height:266px;pointer-events:none}
+.ccStickZone{position:absolute;left:0;bottom:0;width:max(132px,min(210px,calc(40% - 10px)));height:210px;touch-action:none;pointer-events:auto}
+.ccStickZone .ccStick{pointer-events:none}
+.ccStick{position:absolute;left:0;bottom:0;width:132px;height:132px;border-radius:50%;border:2px solid rgba(138,162,214,.7);background:rgba(20,26,44,.55);touch-action:none;pointer-events:auto;will-change:transform}
+.ccStick:focus-visible{outline:3px solid #ffd166;outline-offset:3px}
+.ccKnob{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:rgba(94,179,255,.85);pointer-events:none;will-change:transform}
+/* Overlapping transparent containers, never overlapping circular hit targets. */
+.ccBtns{--o:56px;position:absolute;right:0;bottom:0;width:288px;height:266px;pointer-events:none}
+.ccBtn{position:absolute;box-sizing:border-box;display:flex;align-items:center;justify-content:center;text-align:center;width:64px;height:64px;border-radius:50%;border:2px solid rgba(138,162,214,.85);background:rgba(28,35,56,.62);color:#f2f5ff;text-shadow:0 1px 2px #05080f;font-weight:800;font-size:11px;line-height:1.12;touch-action:none;cursor:pointer;overflow:hidden;padding:4px;pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.ccBtn:focus-visible,#ccBattle #racialBtn:focus-visible{outline:3px solid #ffd166;outline-offset:3px}
+.ccBtn[data-slot=attack]{width:92px;height:92px;right:var(--o);bottom:0;font-size:14px;border-color:#ff6b6b;background:rgba(120,32,40,.6)}
+.ccBtn[data-slot=a1]{right:calc(var(--o) + 100px);bottom:12px}
+.ccBtn[data-slot=a2]{right:calc(var(--o) + 78px);bottom:78px}
+.ccBtn[data-slot=ult]{width:76px;height:76px;right:calc(var(--o) + 8px);bottom:100px;font-size:12px;border-color:#ffd166;background:rgba(112,84,12,.62);color:#fff1c4}
+.ccBtn[data-slot=dreambind]{width:64px;height:64px;right:calc(var(--o) + 84px);bottom:150px;font-size:10px;border-color:#b69cff}
+.ccBtn.down{border-color:#ffd166;transform:scale(.94)}
+.ccBtn:disabled{filter:saturate(.4) brightness(.8);cursor:not-allowed}
+.ccBtn .ccSymbol{position:absolute;inset:6px;display:flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;pointer-events:none}
+.ccArt{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ccGlyph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1;pointer-events:none}
+.ccBtn[data-slot=attack] .ccGlyph{font-size:40px}
+.ccBtn[data-slot=ult] .ccGlyph{font-size:34px}
+.ccBtn:disabled .ccSymbol,.ccBtn.cooling .ccSymbol{filter:grayscale(.35) brightness(.45)}
+.ccBtn .ccCd{position:absolute;inset:0;z-index:2;display:flex;box-sizing:border-box;align-items:center;justify-content:center;border-radius:50%;background:rgba(8,12,24,.12);font-size:24px;line-height:1;font-weight:900;color:#fff;text-shadow:0 1px 3px #000,0 0 5px #000;pointer-events:none}
+.ccBtn[data-slot=attack] .ccCd{font-size:30px}
+/* native racial utility, moved into .ccBtns during manual only */
+body #ccBattle .ccBtns #racialBtn{position:absolute!important;inset:auto!important;right:0!important;bottom:184px!important;left:auto!important;top:auto!important;transform:none!important;box-sizing:border-box!important;width:72px!important;min-width:72px!important;max-width:72px!important;height:72px!important;min-height:72px!important;margin:0!important;padding:12px!important;border:0!important;border-radius:50%!important;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;line-height:1.1;background:transparent!important;pointer-events:auto;z-index:1}
+/* A 48px visible utility circle retains the original 72px racial touch target. */
+#ccBattle #racialBtn::before{content:"";position:absolute;inset:12px;border:2px solid rgba(138,162,214,.85);border-radius:50%;background:rgba(28,35,56,.62);pointer-events:none}
+#ccBattle #racialBtn.racialReady::before{border-color:#ffd166}
+body #ccBattle #racialBtn #racialBtnIcon{position:relative;font-size:28px;margin:0;line-height:1;pointer-events:none}
+body #ccBattle #racialBtn #racialBtnLabel{display:none!important}
+body #ccBattle .ccBtns #racialBtn:disabled{opacity:1}
+#ccBattle #racialBtn:disabled #racialBtnIcon,#ccBattle #racialBtn.ccRacialCooling #racialBtnIcon{filter:grayscale(.35) brightness(.45)}
+#ccBattle #racialBtn .ccRacialCd{position:absolute;inset:12px;z-index:2;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:18px;line-height:1;font-weight:900;color:#fff;text-shadow:0 1px 3px #000,0 0 5px #000;pointer-events:none}
+body.ccLiveBattle #battleScreen{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+body.ccLiveBattle #battleScreen input,body.ccLiveBattle #battleScreen textarea,body.ccLiveBattle #battleScreen select,body.ccLiveBattle #battleScreen [contenteditable]:not([contenteditable="false"]){user-select:text;-webkit-user-select:text;-webkit-touch-callout:default}
+body.ccLiveBattle #arenaWrap,body.ccLiveBattle #ccBattle,body.ccLiveBattle #racialBtn{touch-action:none;overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
+body.ccLiveBattle #battleScreen img{-webkit-user-drag:none}
+@media (max-width:374px){
+ .ccRow,.ccBtns{height:342px}
+ .ccBtn[data-slot=a1]{bottom:140px}
+ .ccBtn[data-slot=a2]{bottom:212px}
+ .ccBtn[data-slot=dreambind]{right:var(--o);bottom:270px}
+}
+@container (max-width:354px){
+ .ccRow,.ccBtns{height:342px}
+ .ccBtn[data-slot=a1]{bottom:140px}
+ .ccBtn[data-slot=a2]{bottom:212px}
+ .ccBtn[data-slot=dreambind]{right:var(--o);bottom:270px}
+}
+body.phoneLandscapeBattle #ccBattle .ccMsg{display:none}
+body.phoneLandscapeBattle #ccBattle .ccStick{width:112px;height:112px}
+@media (orientation:landscape) and (max-height:520px){
+ #ccBattle .ccMsg{display:none}
+ .ccStick{width:112px;height:112px}
+}

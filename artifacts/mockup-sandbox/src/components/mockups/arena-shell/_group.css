@@ -1,0 +1,262 @@
+:root {
+  --bg: #0b0e17;
+  --panel: #141928;
+  --panel2: #1c2338;
+  --accent: #5eb3ff;
+  --accent2: #ff6b6b;
+  --gold: #ffd166;
+  --text: #e8ecf7;
+  --muted: #8b93ac;
+  --game-panel: #11182a;
+  --game-panel2: #171f34;
+  --game-line: #344365;
+  --game-gold: #e8bd62;
+  --game-blue: #62b8ff;
+  --game-text: #eef5ff;
+  --game-muted: #91a1bf;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+  padding: 14px 16px 36px;
+  overflow-x: hidden;
+  color: var(--game-text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(circle at 50% -20%, rgba(65, 105, 180, .20), transparent 45%),
+    linear-gradient(180deg, #090d18 0%, #070a12 100%);
+}
+
+.min-h-screen *,
+.min-h-screen *::before,
+.min-h-screen *::after {
+  box-sizing: border-box;
+}
+
+.min-h-screen button {
+  font-family: inherit;
+}
+
+.min-h-screen button.primary {
+  background: linear-gradient(90deg, #5eb3ff, #3f8bd9);
+  border: none;
+  color: #08101f;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 12px 34px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: .15s ease;
+  box-shadow: 0 4px 14px rgba(94, 179, 255, .3);
+}
+
+.min-h-screen button.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(94, 179, 255, .45);
+}
+
+.min-h-screen button.primary:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.min-h-screen button.secondary {
+  background: var(--panel2);
+  border: 1px solid #33405e;
+  color: var(--text);
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: .15s ease;
+}
+
+.min-h-screen button.secondary:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+}
+
+/* V44.52 — game-style command menu */
+#mainHub {
+  display: block;
+  max-width: 1080px;
+  margin: 14px auto;
+  padding: 0 0 18px;
+  overflow: hidden;
+  border: 1px solid #3a4c6e;
+  background: linear-gradient(180deg, #111b2e, #080d17 72%);
+  border-radius: 20px;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .42);
+}
+.hubHero {
+  position: relative;
+  min-height: 190px;
+  padding: 22px 22px 18px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: radial-gradient(circle at 75% 35%, rgba(82, 142, 220, .20), transparent 32%), linear-gradient(115deg, rgba(7, 12, 22, .15), rgba(7, 12, 22, .82)), repeating-linear-gradient(90deg, transparent 0 68px, rgba(255, 255, 255, .018) 69px 70px);
+}
+.hubHero:before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #111b2e 0, transparent 45%), radial-gradient(ellipse at 82% 100%, rgba(86, 120, 165, .18), transparent 52%);
+  pointer-events: none;
+}
+.hubHeroCopy { position: relative; z-index: 3; max-width: 470px; }
+.hubEyebrow { font-size: 10px; font-weight: 1000; letter-spacing: 2px; color: #7fc7ff; }
+.hubTitle { font-size: 31px; font-weight: 1000; color: #f5f8ff; letter-spacing: .4px; text-shadow: 0 3px 16px #000; }
+.hubSub { font-size: 12px; color: #a7b6cf; margin: 5px 0 0; }
+.hubParty { position: absolute; right: 16px; bottom: 8px; z-index: 2; display: flex; align-items: flex-end; justify-content: flex-end; width: 48%; height: 178px; pointer-events: none; }
+.hubPartyFace { position: relative; width: 128px; height: 164px; margin-left: -25px; overflow: hidden; border-radius: 16px 16px 8px 8px; border: 1px solid rgba(151, 190, 236, .32); background: #101827; box-shadow: 0 10px 26px rgba(0, 0, 0, .5); transform-origin: bottom center; }
+.hubPartyFace:nth-child(1) { transform: scale(.88) translateY(9px); z-index: 1; }
+.hubPartyFace:nth-child(2) { z-index: 3; }
+.hubPartyFace:nth-child(3) { transform: scale(.91) translateY(7px); z-index: 2; }
+.hubPartyFace img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: saturate(.94) contrast(1.04); }
+.hubPartyFace:after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(5, 9, 16, .88)); }
+.hubPartyEmpty { display: flex; align-items: center; justify-content: center; font-size: 42px; color: #40506b; }
+.hubPartyEmpty:after { display: none; }
+.hubPreviewBadge { position: absolute; z-index: 5; left: 5px; right: 5px; bottom: 5px; padding: 3px 4px; border-radius: 6px; background: rgba(5, 9, 16, .78); border: 1px solid rgba(255, 255, 255, .12); font-size: 8px; font-weight: 900; color: #dbe8fb; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hubBody { padding: 0 18px; }
+.hubTeamBar { position: relative; z-index: 4; margin: -2px 0 14px; padding: 10px 12px; border: 1px solid #354a6c; background: rgba(7, 13, 24, .9); border-radius: 11px; font-size: 11px; color: #c2d0e4; }
+.hubPlayPanel { margin: 0 0 12px; padding: 12px; border: 1px solid #3b5276; border-radius: 14px; background: linear-gradient(180deg, #101b2f, #0a1220); box-shadow: inset 0 1px rgba(255, 255, 255, .04); }
+.hubPlayTop { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.hubPlayTitle { font-size: 12px; font-weight: 1000; color: #edf5ff; letter-spacing: .5px; }
+.hubPlayHint { font-size: 10px; color: #8fa2c0; margin-top: 2px; }
+.hubPlayControls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+#hubModeMount .modeRow { left: auto; transform: none; margin: 0; display: flex; flex-wrap: wrap; }
+.hubTournamentActions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.hubTournamentActions button { min-height: 42px; }
+.hubTourStrip { margin-top: 10px; padding: 10px 12px; border: 1px solid #6f592e; background: linear-gradient(135deg, rgba(89, 64, 20, .28), rgba(20, 25, 42, .9)); border-radius: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.hubTourStrip b { color: #ffe08a; }
+.hubTourStrip span { font-size: 11px; color: #9eacc4; }
+.hubGrid { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 10px; }
+.hubCard { position: relative; isolation: isolate; min-height: 126px; overflow: hidden; border: 1px solid #334765; background: linear-gradient(145deg, #14223a, #0d1525); color: #eef4ff; border-radius: 15px; padding: 14px; text-align: left; cursor: pointer; transition: .18s ease; }
+.hubCard:before { content: ''; position: absolute; z-index: -2; inset: 0; background: radial-gradient(circle at 88% 12%, rgba(118, 171, 235, .14), transparent 38%); }
+.hubCard:after { content: ''; position: absolute; z-index: -1; right: -18px; bottom: -25px; width: 115px; height: 115px; border-radius: 50%; border: 1px solid rgba(147, 183, 226, .09); box-shadow: 0 0 0 18px rgba(147, 183, 226, .025); }
+.hubCard:hover { border-color: #77a9e2; transform: translateY(-2px); box-shadow: 0 9px 20px rgba(0, 0, 0, .28); }
+.hubCard .hi { display: inline-flex; width: 42px; height: 42px; align-items: center; justify-content: center; font-size: 24px; border: 1px solid #3b5277; border-radius: 11px; background: #0a1220; box-shadow: inset 0 1px rgba(255, 255, 255, .05); }
+.hubCard b { display: block; font-size: 15px; margin: 10px 0 3px; }
+.hubCard .hubDesc { display: block; font-size: 10px; color: #95a7c2; line-height: 1.4; max-width: 82%; }
+.hubCard.team { grid-row: span 2; min-height: 262px; border-color: #567fb9; background: linear-gradient(155deg, #1a3355, #101b2d 72%); }
+.hubCard.team .hi { width: 50px; height: 50px; font-size: 29px; }
+.hubCard.team b { font-size: 19px; }
+.hubCard.team .hubDesc { font-size: 11px; max-width: 62%; }
+.hubCardArt { position: absolute; right: -6px; bottom: 0; width: 45%; height: 86%; opacity: .82; z-index: -1; overflow: hidden; mask-image: linear-gradient(to left, #000 65%, transparent); -webkit-mask-image: linear-gradient(to left, #000 65%, transparent); }
+.hubCardArt img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; }
+.hubCard.tournament { background: radial-gradient(circle at 88% 20%, rgba(255, 201, 92, .14), transparent 38%), linear-gradient(145deg, #241e16, #121722); }
+.hubCard.battle { background: radial-gradient(circle at 88% 20%, rgba(211, 80, 65, .13), transparent 38%), linear-gradient(145deg, #211b20, #101722); }
+.hubCard.defense { background: radial-gradient(circle at 88% 20%, rgba(98, 162, 214, .13), transparent 38%), linear-gradient(145deg, #142231, #101722); }
+.hubCard.collection { background: radial-gradient(circle at 88% 20%, rgba(160, 111, 221, .13), transparent 38%), linear-gradient(145deg, #1c1830, #101722); }
+.hubCard.balance { background: radial-gradient(circle at 88% 20%, rgba(81, 194, 165, .12), transparent 38%), linear-gradient(145deg, #14241f, #101722); }
+
+/* Source select-screen layout and its game-style refinements. */
+#selectScreen { background: linear-gradient(180deg, rgba(14, 20, 35, .55), rgba(7, 11, 20, .22)); border-radius: 16px; padding: 8px 10px 14px; }
+.teamBuilderHead { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 4px auto 10px; max-width: 1100px; }
+.teamBuilderHead h2 { margin: 0; color: #eef4ff; }
+.teamBuilderHead div div { font-size: 11px; color: #8fa0ba; margin-top: 2px; }
+.modeRow { display: inline-flex; position: relative; left: 50%; transform: translateX(-50%); background: #0a0f1c; border: 1px solid #273450; padding: 5px; border-radius: 14px; gap: 5px; box-shadow: inset 0 2px 8px rgba(0, 0, 0, .45); }
+.modeLabel { color: var(--muted); font-size: 13px; margin-right: 4px; }
+.modeBtn { background: var(--panel); border: 2px solid #262e47; color: var(--text); padding: 6px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: 600; transition: .15s ease; }
+.modeRow button { border-radius: 10px; border: 1px solid transparent; background: transparent; box-shadow: none; font-weight: 800; letter-spacing: .5px; }
+.modeBtn:hover { border-color: var(--accent); transform: translateY(-1px); }
+.modeRow button.active, .modeRow button.selected { background: linear-gradient(180deg, #293650, #182238); border-color: var(--game-gold); color: #ffe19a; box-shadow: 0 0 12px rgba(232, 189, 98, .15), inset 0 1px rgba(255, 255, 255, .08); }
+#selectScreen .teamStatus { text-align: center; margin-bottom: 14px; font-size: 16px; }
+#teamActionRow { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; margin: 0 auto 5px; background: linear-gradient(180deg, rgba(21, 29, 48, .88), rgba(10, 15, 27, .88)); border: 1px solid #2b3957; border-radius: 14px; padding: 7px 10px; box-shadow: inset 0 1px rgba(255, 255, 255, .035), 0 7px 20px rgba(0, 0, 0, .22); max-width: 900px; }
+#teamSlots { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 0; flex-wrap: nowrap; }
+.slot { width: 110px; height: 60px; border: 2px dashed #33405e; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: var(--panel); font-size: 26px; color: #3a4568; }
+.slot.filled { border-style: solid; border-color: var(--accent); background: var(--panel2); }
+.slot.captain { border-color: #ffd966; box-shadow: 0 0 12px rgba(255, 217, 102, .4); }
+#teamSlots .slot { background: linear-gradient(180deg, #1b2740, #11192b); border: 1px solid #4c648d; border-radius: 10px; box-shadow: inset 0 0 14px rgba(69, 135, 210, .08); }
+#battleActionButtons { display: flex; justify-content: center; gap: 7px; flex-wrap: wrap; }
+#battleActionButtons button { margin: 0; }
+#selectScreen > #teamActionRow #battleActionButtons #startBtn { display: none; }
+#underTeamActions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 2px 0 7px; }
+#racialRow { text-align: center; margin-bottom: 14px; display: none; }
+#racialPickBtn { background: #111a2c; border: 1px solid #425474; color: #c9d6eb; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; }
+#mirrorLabel { display: block; margin-top: 10px; font-size: 13px; color: #8999b6; cursor: pointer; user-select: none; }
+#mirrorLabel input { vertical-align: middle; margin-right: 6px; cursor: pointer; }
+#savedTeamsPanel { margin: 12px auto 4px; max-width: 980px; border: 1px solid #31415f; background: #0c1322; border-radius: 14px; padding: 12px; }
+#savedTeamsPanel .stHead { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.stTitle { font-weight: 900; color: #edf3ff; }
+.stHint { font-size: 11px; color: #91a0bb; }
+#savedTeamsPanel .stTools { display: flex; gap: 8px; flex-wrap: wrap; }
+#savedTeamsDetails { border-top: 1px solid #2a3956; margin-top: 10px; padding-top: 8px; color: #dce6f7; font-size: 12px; }
+#savedTeamsDetails summary { cursor: pointer; font-weight: 800; }
+.savedTeamsOptional { color: #91a0bb; font-size: 11px; font-weight: 400; margin-left: 8px; }
+.savedTeamsContent { padding-top: 6px; }
+.savedTeamsContent p { margin: 5px 0; }
+.stSaveRow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.stSaveRow input { flex: 1; min-width: 150px; background: #080d18; color: #fff; border: 1px solid #334565; border-radius: 9px; padding: 9px; }
+.savedTeamCards { display: grid; grid-template-columns: repeat(auto-fit, minmax(235px, 1fr)); gap: 8px; margin-top: 10px; }
+#classGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.card { position: relative; overflow: hidden; background: linear-gradient(145deg, rgba(28, 38, 62, .97), rgba(12, 18, 31, .98)); border: 1px solid #344563; border-radius: 12px; padding: 14px; cursor: pointer; transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease; box-shadow: 0 7px 20px rgba(0, 0, 0, .26), inset 0 1px rgba(255, 255, 255, .035); }
+.card:before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, #6fc5ff, #466baf); opacity: .65; }
+.card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, .35), 0 0 0 1px rgba(94, 179, 255, .15); }
+.card.selected { border-color: #e7bd62; background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, 0) 40%), var(--panel2); box-shadow: 0 0 0 1px rgba(231, 189, 98, .35), 0 0 20px rgba(231, 189, 98, .16), 0 8px 24px rgba(0, 0, 0, .35); }
+.card.selected:before { background: #f0c768; opacity: 1; }
+.card .head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.heroPortrait { width: 64px; height: 64px; flex: 0 0 64px; border-radius: 10px; border: 1px solid #506a93; background: radial-gradient(circle at 50% 30%, #2b3656, #121728 72%); box-shadow: 0 3px 12px rgba(0, 0, 0, .35); overflow: hidden; }
+.heroPortrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.card .name { font-size: 17px; font-weight: 700; }
+.card .role { font-size: 11px; color: var(--muted); margin-top: -2px; }
+.infoBtn { margin-left: auto; align-self: flex-start; width: 22px; height: 22px; flex: 0 0 22px; font-size: 12px; font-weight: 800; border-radius: 50%; border: 1px solid #435576; background: #172137; color: #9aa3bd; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.crownBtn { margin-left: auto; align-self: flex-start; font-size: 19px; padding: 4px 6px; border-radius: 8px; border: 0; opacity: .32; filter: grayscale(1); cursor: pointer; }
+.card ul { margin: 6px 0 0; padding-left: 18px; font-size: 12.5px; color: #c3cae0; line-height: 1.5; }
+.card li b { color: var(--accent); }
+.buildMiniSummary { font-size: 10px; color: #a8b8d0; }
+.captainBonus { margin-top: 8px; padding: 8px 10px; border-radius: 8px; font-size: 12.5px; line-height: 1.4; background: rgba(255, 217, 102, .1); border: 1px solid rgba(255, 217, 102, .35); color: #ffe8a8; }
+
+@media (max-width: 700px) {
+  .min-h-screen { padding: 8px; }
+  #mainHub { border-radius: 14px; }
+  .hubHero { min-height: 160px; padding: 18px; }
+  .hubTitle { font-size: 25px; }
+  .hubParty { right: 3px; width: 54%; height: 145px; opacity: .72; }
+  .hubPartyFace { width: 94px; height: 130px; margin-left: -32px; }
+  .hubBody { padding: 0 10px; }
+  .hubGrid { grid-template-columns: 1fr 1fr; }
+  .hubCard.team { grid-column: 1 / -1; grid-row: auto; min-height: 145px; }
+  .hubCard.team .hubDesc { max-width: 58%; }
+  .hubCard { min-height: 110px; padding: 12px; }
+  .hubPlayTop { align-items: stretch; }
+  .hubPlayControls { width: 100%; }
+  .hubPlayControls #hubJoinBtn { width: 100%; margin-top: 8px; }
+  .hubPlayPanel { padding: 10px; }
+  .hubTourStrip { align-items: stretch; }
+  .hubTourStrip > div:last-child { display: flex; gap: 6px; width: 100%; }
+  .hubTourStrip > div:last-child button { flex: 1; }
+  .teamBuilderHead { align-items: flex-start; }
+  #classGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  #classGrid .card { min-width: 0; padding: 9px; border-radius: 13px; }
+  #classGrid .head { gap: 6px; align-items: center; }
+  #classGrid .heroPortrait { width: 48px; height: 48px; min-width: 48px; flex-basis: 48px; border-radius: 11px; }
+  #classGrid .name { font-size: 13px; line-height: 1.1; }
+  #classGrid .role { font-size: 9px; }
+  #classGrid .infoBtn { font-size: 0; width: 34px; height: 34px; flex: 0 0 34px; }
+  #classGrid .infoBtn:after { content: 'ⓘ'; font-size: 17px; }
+  #classGrid .crownBtn { width: 36px; height: 36px; }
+  #classGrid ul { font-size: 9px; line-height: 1.28; margin: 6px 0; padding-left: 16px; }
+  #classGrid .card ul { display: none; }
+  #classGrid .captainBonus { font-size: 9px; }
+  #savedTeamsPanel .stHead > div:last-child { display: flex; width: 100%; gap: 7px; }
+  #savedTeamsPanel .stTools button { flex: 1; min-width: 0; padding: 8px 5px; font-size: 11px; }
+  #teamActionRow { flex-direction: column; gap: 7px; }
+}
+
+@media (max-width: 430px) {
+  .hubHero { min-height: 145px; }
+  .hubParty { opacity: .5; width: 52%; }
+  .hubPartyFace { width: 80px; height: 115px; }
+  .hubGrid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hubCard { min-height: 104px; }
+  .hubCard b { font-size: 13px; }
+  .hubCard .hubDesc { max-width: 100%; font-size: 9px; }
+  .hubCard.team { grid-column: 1 / -1; }
+  .hubCard.team .hubDesc { max-width: 60%; }
+  .hubTourStrip > div:last-child button { min-width: 0; padding: 8px 4px; font-size: 10px; }
+  .hubPreviewBadge { font-size: 7px; }
+}

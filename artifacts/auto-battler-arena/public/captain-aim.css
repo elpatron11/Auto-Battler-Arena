@@ -1,0 +1,8 @@
+#captainAimOverlay{position:fixed;inset:0;pointer-events:none;z-index:35}
+#captainAimOverlay[hidden]{display:none}
+#captainAimOverlay svg{position:absolute;overflow:hidden;pointer-events:none}
+.captainAimHint{position:absolute;top:max(55px,var(--game-safe-top,0px));left:50%;transform:translateX(-50%);max-width:65%;padding:7px 12px;border-radius:10px;background:#0c172aee;border:1px solid #72ead6;color:#d9fff6;font-size:12px;text-align:center}
+.captainAimHint.invalid{border-color:#ff6b79;color:#ffd0d6}
+.captainAimCancel,.captainTargetClear{position:absolute;right:max(12px,var(--game-safe-right,0px));top:90px;pointer-events:auto;touch-action:none;min-height:42px;border:1px solid #ff6b79;border-radius:12px;background:#291522ee;color:#ffe3e8;font-size:12px;padding:8px 12px}
+.captainTargetClear{top:140px;border-color:#ffd166;color:#ffeba9;background:#241d0cee}
+#captainAimOverlay button[hidden],#captainAimOverlay .captainAimHint[hidden]{display:none}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 320" role="img" aria-label="Doom Curse collectible art">
+<defs><radialGradient id="g"><stop stop-color="#c56cff" stop-opacity=".92"/><stop offset="1" stop-color="#4d1c61"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect width="256" height="320" rx="22" fill="#08111f"/><rect x="8" y="8" width="240" height="304" rx="18" fill="url(#g)" stroke="#c56cff" stroke-width="3"/>
+<circle cx="128" cy="132" r="82" fill="#07101d" opacity=".55" stroke="#c56cff" stroke-opacity=".55"/>
+<polygon points="85,43 36,91 153,44 143,61 44,220 154,42 143,30" fill="none" stroke="#c56cff" stroke-width="9" stroke-linejoin="round" filter="url(#glow)" opacity=".9"/>
+<circle cx="128" cy="132" r="24" fill="#c56cff" opacity=".82" filter="url(#glow)"/><circle cx="128" cy="132" r="9" fill="#fff" opacity=".9"/>
+<rect x="18" y="228" width="220" height="70" rx="12" fill="#050b14" opacity=".88"/>
+<text x="128" y="250" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" font-weight="700" fill="#c56cff" letter-spacing="2">SPELL</text>
+<text x="128" y="276" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="800" fill="#fff">Doom Curse</text>
+</svg>

@@ -1,0 +1,31 @@
+/* Reuse the engine's live health lists, without covering or stretching the map. */
+body.fullscreenBattleHud #battleScreen{position:relative}
+body.fullscreenBattleHud #matchLoadout,
+body.fullscreenBattleHud #landscapeLoadoutBtn{display:none!important}
+body.fullscreenBattleHud #teamBars{display:contents!important}
+body.fullscreenBattleHud #teamBars .teamCol{
+  position:absolute;z-index:9;box-sizing:border-box;min-width:0;
+  top:var(--battle-health-top);height:var(--battle-health-height);
+  width:var(--battle-health-width);margin:0;padding:8px 6px;
+  overflow:auto;overscroll-behavior:contain;touch-action:pan-y;
+  scrollbar-width:thin;background:linear-gradient(180deg,#101b2de8,#0a1220b8);
+  border:1px solid #344866;border-radius:9px;
+}
+body.fullscreenBattleHud #playerCol{left:0}
+body.fullscreenBattleHud #enemyCol{right:0}
+body.fullscreenBattleHud #teamBars h3{
+  font-size:10px;line-height:1.25;letter-spacing:.5px;margin:0 0 8px;
+}
+body.fullscreenBattleHud .unitRow{
+  display:grid;grid-template-columns:20px minmax(0,1fr);gap:4px;
+  font-size:11px;margin-bottom:9px;
+}
+body.fullscreenBattleHud .unitRow>span:not(.ic){
+  width:auto!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+body.fullscreenBattleHud .unitRow .barBg{
+  grid-column:1/-1;width:100%;min-width:0;height:9px;border-radius:4px;overflow:hidden;
+}
+body.fullscreenBattleHud .unitRow .barFill{height:100%}
+/* When no side margin exists, keep the normal layout instead of covering combat. */
+body.fullscreenBattleHud.healthMarginsUnavailable #teamBars{display:none!important}

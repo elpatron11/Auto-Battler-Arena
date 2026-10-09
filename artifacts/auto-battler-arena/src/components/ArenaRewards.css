@@ -1,0 +1,21 @@
+.arw-backdrop{position:fixed;inset:0;z-index:100;background:rgba(4,7,14,.78);display:flex;align-items:flex-end;justify-content:center;padding:0}
+@media(min-width:600px){.arw-backdrop{align-items:center;padding:16px}}
+.arw-panel{width:100%;max-width:460px;max-height:90dvh;overflow:auto;padding:16px;border:1px solid #6e5b3e;border-radius:16px 16px 0 0;background:radial-gradient(circle at 90% 0,rgba(255,201,92,.14),transparent 40%),linear-gradient(160deg,#1b2338,#0b101c);color:#e8ecf7;font:13px 'Segoe UI',Arial,sans-serif;outline:none}
+@media(min-width:600px){.arw-panel{border-radius:16px}}
+.arw-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+.arw-head h2{margin:3px 0 0;font-size:17px;color:#ffd166}
+.arw-list{list-style:none;margin:0 0 10px;padding:0;display:grid;gap:8px}
+.arw-skin{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid #334765;border-radius:12px;background:#0b1425}
+.arw-skin.is-open{border-color:#ffd166}
+.arw-skin p{margin:3px 0 0;font-size:11px;color:#a7b6cf;line-height:1.4}
+.arw-class{font-size:10px;color:#7fc7ff;font-weight:800;text-transform:uppercase;letter-spacing:1px}
+.arw-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;border:1px solid #3b5277;background:#0a1220;color:#8b93ac}
+.is-open .arw-icon{color:#ffd166}
+.arw-state{font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#8b93ac}
+.is-open .arw-state{color:#ffd166}
+.arw-note{margin:6px 0 0;font-size:11px;line-height:1.5;color:#9baeca}
+.arw-err{color:#ffc4cd}
+.arw-backdrop button:focus-visible{outline:2px solid #ffd166;outline-offset:2px}
+.arw-backdrop .ag-button{display:inline-flex;align-items:center;gap:6px;min-height:29px;padding:5px 10px;border:1px solid #33405e;border-radius:20px;background:#1c2338;color:#e8ecf7;font-size:11px;font-weight:700;cursor:pointer}
+.arw-backdrop .ag-side-link{background:none;border:0;color:#7fc7ff;text-decoration:underline;cursor:pointer;font-size:inherit}
+.arw-backdrop .ag-eyebrow{font-size:10px;font-weight:900;letter-spacing:2px;color:#7fc7ff;text-transform:uppercase}
